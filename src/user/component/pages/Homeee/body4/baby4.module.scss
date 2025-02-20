@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    column-gap: 1rem;
+    align-items: stretch;
+    position: relative;
+    justify-content: center;
+    height: 400px;
+}
+.iner {
+    width: 790px;
+    right: 2rem;
+    position: relative;
+    margin-top: 5rem;
+    margin-left: 5rem;
+
+    // box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.picture {
+    width: 300;
+    height: 270px;
+    top: 20%;
+    position: relative;
+    margin-top: -40px;
+}
+.picture1 {
+    width: 140px;
+    height: 140px;
+    margin: 1rem;
+}
+.ineer1 {
+    display: flex;
+    justify-content: center;
+}
+.ineer2 {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,19 @@
+.list {
+    align-content: center;
+    padding: 0.5rem;
+    padding-right: 120px;
+    color: white;
+    text-decoration: none;
+    &.active {
+        color: yellow;
+    }
+}
+.menu {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    backdrop-filter: blur(30px);
+    box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+    // border: 2px solid rgba(255, 255, 255, 0.18);
+}
