@@ -1,5 +1,5 @@
-import Header from '~/layout/header';
-import Slibar from '~/layout/slibar/slibar';
+import Header from '~/user/layout/header';
+import Slibar from '~/user/layout/slibar/slibar';
 import styles from './df.module.scss';
 import classNames from 'classnames/bind';
 
