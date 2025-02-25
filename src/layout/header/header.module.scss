@@ -1,5 +1,122 @@
-.header {
-    color: aqua;
-    background-color: black;
-    height: 100px;
+.header-container {
+    height: 90px;
+    width: 100%;
+    background: #8c8c92;
+    text-align: left; 
+    // position: fixed;
+    top: 0;
+    left: 0;
+    // z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+    background: #8c8c92;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-left {
+    display: flex;
+    padding: 0px;
+    font-size: 40px;
+    width: 50px;
+}
+
+.menu-logo {
+    margin: auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    width: 50px;
+    cursor: pointer;
+    height: 40px;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-left: 70px;
+}
+
+.logo img {
+    width: auto;
+    height: 60px;
+    border-radius: 50%;
+    
+}
+
+.menu-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.head-menu {
+    display: flex;
+    gap: 30px;
+}
+
+.head-menu button {
+    font-weight: bolder;
+    font-size: large;
+    margin: auto 20px;
+    padding: 8px 20px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    width: auto;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.head-menu button:hover {
+    background: #8c8c92;
+    border: 1px solid #000;
+    z-index: 1000;
+    transform: scale(1.1);
+}
+
+.menu-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 40px;
+    align-items: center;
+    text-align: center;
+
+}
+
+.noti-logo {
+    font-size: 30px;
+    cursor: pointer;
+    
+}
+
+.log-container button {
+    font-weight: bolder;
+    font-size: large;
+    margin: auto 20px;
+    padding: 8px 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: auto;
+    height: 40px;
+    margin: auto 0 auto 30px;
+
+}
+.log-container button:hover {
+    background: #adadb4;    
+    // border: 1px solid #fff;
 }

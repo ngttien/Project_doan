@@ -1,0 +1,127 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -30%;
+    width: 20%;
+    height: 100vh;
+    background-color: #2a6b8f;
+    display: flex;
+    flex-direction: column; /* Chia 3 phần theo chiều dọc */
+    transition: left 0.3s ease-in-out;
+    padding-top: 40px;
+    padding-bottom: 0px;
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    
+    a {
+        text-decoration: none;
+        color: white;
+        display: block;
+        font-size: 20px;
+        transition: 0.3s;
+        padding: 10px; /* Tạo khoảng cách giữa chữ và viền */
+        margin: 5px; /* Khoảng cách giữa các mục */
+    }
+
+    a:hover {
+        background: #ffffff;
+        color: black;
+        padding-left: 15px;
+    }
+}
+
+/* Khi sidebar có class "active" -> Trượt vào màn hình */
+.sidebar.active {
+    left: 0;
+    
+}
+
+
+/* Nút đóng (close-btn) */
+.close-btn {
+    width: 50px; 
+    height: 50px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 5px; 
+}
+
+
+.sidebar-top {
+    background: #2a6b8f;
+    padding: 10px !important;
+    border-bottom: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    .infor {
+        text-decoration: none;
+        color: white;
+        padding: 10px !important;
+        margin: 0 auto !important;
+        width: 50% !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 2px solid white !important;
+        border-radius: 10px !important;
+        font-size: 20px !important;
+    
+    }
+
+    .sale-infor {
+        margin: 10px !important;
+        margin-top: 20px !important;
+        font-size: xx-large !important;
+    }
+}
+
+
+
+/* Phần giữa (5 phần) */
+.sidebar-middle {
+    background: #2a6b8f;
+    padding: 0px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 10px;
+    margin: 10px;
+    a {
+        margin: 10px;
+    }
+    .rank {
+        border: 2px solid white !important;
+        border-radius: 10px !important;
+        font-size: xx-large !important;
+    }
+    
+}
+
+
+
+/* Phần dưới cùng (2.5 phần) */
+.sidebar-bottom {
+    background: #666;
+    padding: 10px;
+    border-top: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: auto; /* Đảm bảo dính xuống dưới */
+
+
+}
