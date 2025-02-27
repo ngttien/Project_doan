@@ -5,7 +5,7 @@
     left: -30%;
     width: 20%;
     height: 100vh;
-    background-color: #2a6b8f;
+    background-color: #227EA9;
     display: flex;
     flex-direction: column; /* Chia 3 phần theo chiều dọc */
     transition: left 0.3s ease-in-out;
@@ -58,7 +58,7 @@
 
 
 .sidebar-top {
-    background: #2a6b8f;
+    background: #227EA9;
     padding: 10px !important;
     border-bottom: 2px solid white;
     display: flex;
@@ -92,7 +92,7 @@
 
 /* Phần giữa (5 phần) */
 .sidebar-middle {
-    background: #2a6b8f;
+    background: #227EA9;
     padding: 0px;
     overflow-y: auto;
     display: flex;

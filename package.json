@@ -9,7 +9,6 @@
     "classname": "^0.0.0",
     "classnames": "^2.5.1",
     "cra-template": "1.2.0",
-    "customize-cra": "^1.0.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
@@ -46,6 +45,7 @@
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^5.0.2",
+    "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.83.4",
     "url-loader": "^4.1.1"

@@ -8,13 +8,37 @@ function Footer() {
         <footer className={cx('footer')}>
             <div className={cx('container')}>
                 <div className={cx('row')}>
-                    <div className={cx('col-xl-3')}>
+                    <div className={cx('col-lg-3')}>
+                        <ul className={cx('list-1')}>
+                            <li className={cx('footer-list-item')}>About Us</li>
+                            <li className={cx('footer-list-item')}>Contact Us</li>
+                            <li className={cx('footer-list-item')}>Privacy Policy</li>
+                            <li className={cx('footer-list-item')}>Terms of Service</li>
+                        </ul>
                     </div>
-                    <div className={cx('col-xl-3')}>
+                    <div className={cx('col-lg-3')}>
+                    <ul className={cx('list-1')}>
+                            <li className={cx('footer-list-item')}>About Us</li>
+                            <li className={cx('footer-list-item')}>Contact Us</li>
+                            <li className={cx('footer-list-item')}>Privacy Policy</li>
+                            <li className={cx('footer-list-item')}>Terms of Service</li>
+                        </ul>
                     </div>
-                    <div className={cx('col-xl-3')}>
+                    <div className={cx('col-lg-3')}>
+                    <ul className={cx('list-1')}>
+                            <li className={cx('footer-list-item')}>About Us</li>
+                            <li className={cx('footer-list-item')}>Contact Us</li>
+                            <li className={cx('footer-list-item')}>Privacy Policy</li>
+                            <li className={cx('footer-list-item')}>Terms of Service</li>
+                        </ul>
                     </div>
-                    <div className={cx('col-xl-3')}>
+                    <div className={cx('col-lg-3')}>
+                    <ul className={cx('list-1')}>
+                            <li className={cx('footer-list-item')}>About Us</li>
+                            <li className={cx('footer-list-item')}>Contact Us</li>
+                            <li className={cx('footer-list-item')}>Privacy Policy</li>
+                            <li className={cx('footer-list-item')}>Terms of Service</li>
+                        </ul>
                     </div>
                 </div>
             </div>

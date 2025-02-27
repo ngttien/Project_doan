@@ -1,7 +1,7 @@
-import Home from '~/pages/home';
-import Menu from '~/pages/menu';
-import Contact from '~/pages/contact';
-import Login from '~/pages/login';
+import Home from '~/pages/home/index';
+import Menu from '~/pages/menu/index';
+import Contact from '~/pages/contact/index';
+import Login from '~/pages/login/index';
 
 const config = [
     { path: '/', component: Home },

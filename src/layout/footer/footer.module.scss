@@ -1,5 +1,5 @@
 .footer {
-  height: 90px;
+  height: 20vh;
   width: 100%;
   background: #8c8c92;
   text-align: center; 
@@ -10,4 +10,9 @@
   align-items: center;
   justify-content: center;
   margin-top: 50px;
+  font-size: small;
+}
+
+.list-1{
+  list-style: none;
 }

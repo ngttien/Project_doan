@@ -1,4 +1,4 @@
-import Header from '~/layout/header';
+import Header from '~/layout/header/index';
 import Sidebar from '~/layout/sidebar/sidebar';
 import Footer from '~/layout/footer/footer';
 import styles from './df.module.scss';
