@@ -3,7 +3,7 @@
     top: 0;
     bottom: 0;
     left: -30%;
-    width: 20%;
+    width: 17%;
     height: 100vh;
     background-color: #227EA9;
     display: flex;
@@ -65,28 +65,56 @@
     flex-direction: column;
     justify-content: center;
     
-    .infor {
-        text-decoration: none;
-        color: white;
-        padding: 10px !important;
-        margin: 0 auto !important;
-        width: 50% !important;
-        height: auto !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border: 2px solid white !important;
-        border-radius: 10px !important;
-        font-size: 20px !important;
+    // .infor {
+    //     text-decoration: none;
+    //     color: white;
+    //     padding: 10px !important;
+    //     margin: 0 auto !important;
+    //     width: 50% !important;
+    //     height: auto !important;
+    //     display: flex !important;
+    //     align-items: center !important;
+    //     justify-content: center !important;
+    //     border: 2px solid white !important;
+    //     border-radius: 10px !important;
+    //     font-size: 20px !important;
+    // }
+
+    // .sale-infor {
+    //     margin: 10px !important;
+    //     margin-top: 20px !important;
+    //     font-size: xx-large !important;
+    // }
     
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 20px 15px;
+        margin-left: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+        }
+        
+    } 
+    .avatar:hover {
+        padding: 0 !important; 
     }
 
-    .sale-infor {
-        margin: 10px !important;
-        margin-top: 20px !important;
-        font-size: xx-large !important;
+    .user {
+        margin: auto 0;
+        a {
+        }
     }
+
 }
+
 
 
 
@@ -102,13 +130,52 @@
     margin: 10px;
     a {
         margin: 10px;
+        font-size: 20px;
     }
-    .rank {
-        border: 2px solid white !important;
-        border-radius: 10px !important;
-        font-size: xx-large !important;
+    .service-wrapper {
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        display: block;
+        font-size: 20px;
+        transition: 0.3s;
+        border: none;
+        margin: 10px;
+        padding: 10px;
+        cursor: pointer;
+
+    }
+    .service-wrapper:hover {
+        color: white;
+        padding-left: 15px;
+    }
+
+    
+    .dropdown-menu a {
+        font-size: large;
+        text-decoration: none;
+        color: white;
+        padding: 10px;
+        display: block;
+        transition: 0.3s;
     }
     
+    .dropdown-menu a:hover {
+        background-color: #f0f0f0;
+        color: black;
+    }
+    
+    .row-middle {
+        display: flex;
+        align-items: center; /* Căn giữa theo chiều dọc */
+        cursor: pointer;
+    }
+    .MdArrowDropDown {
+        font-size: 24px; /* Tùy chỉnh kích thước mũi tên */
+        margin: auto 0;
+    }
+
 }
 
 

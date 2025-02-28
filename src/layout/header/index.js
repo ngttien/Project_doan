@@ -16,6 +16,7 @@ function Header() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  // phần này để xử lý ô tìm kiếm
   const handleFocus = () => setIsExpanded(true);
   const handleBlur = () => {
     setTimeout(() => {
@@ -43,7 +44,7 @@ function Header() {
                   <h6 className={cx("menu-title")}>Menu</h6>
                 </div>
               </div>
-
+              {/* menu giữa */}
               <div className="col-xl-6">
                 <div className={cx("menu-center")}>
                   <a href="/" className={cx("logo")}>

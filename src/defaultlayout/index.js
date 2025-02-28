@@ -1,4 +1,5 @@
 import Header from '~/layout/header/index';
+import Function from '~/layout/function/index';
 import Sidebar from '~/layout/sidebar/sidebar';
 import Footer from '~/layout/footer/footer';
 import styles from './df.module.scss';
@@ -9,6 +10,7 @@ function Defaultlayout({ children, ...props  }) {
     return (
         <div>
             <Header></Header>
+            <Function></Function>
             <Sidebar></Sidebar>
             <div className={cx('iner')} {...props}>
                 <div>{children}</div>
