@@ -1,8 +1,20 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import Default from './defaultlayout';
 import Config from './routes';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
+
+    useEffect(() => {
+        const metaTag = document.createElement('meta');
+        metaTag.name = "viewport";
+        metaTag.content = "width=device-width, initial-scale=1.0";
+        document.head.appendChild(metaTag);
+
+        return () => {
+            document.head.removeChild(metaTag); // Xóa thẻ khi component unmount (nếu cần)
+        };
+    }, []);
+
     return (
         // <Defaultlayout>
         //     <Home />

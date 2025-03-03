@@ -1,5 +1,140 @@
-.header {
-    color: aqua;
-    background-color: black;
-    height: 100px;
+.header-container {
+    height: 90px;
+    width: 100%;
+    background-color: #D7D7E1;
+    text-align: left; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.menu {
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-left {
+    display: flex;
+    padding: 0px;
+    font-size: 40px;
+    width: 50px;
+
+    .menu-logo {
+        margin: auto 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        width: 50px;
+        cursor: pointer;
+        height: 40px;
+    }
+    
+    .menu-title {
+        margin-left: 10px !important;
+        margin: auto 0;
+    }
+    
+    .logo img {
+        width: auto;
+        height: 60px;    
+    }
+    
+}
+
+
+.menu-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+
+
+.menu-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    text-align: center;
+
+    /* Form tìm kiếm */
+    .search-form {
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .input-holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    .search-input {
+        border: none;
+        outline: none;
+        background: none;
+        width: 0;
+        padding: 0;
+        transition: width 0.25s ease-in-out;
+        font-size: medium;
+
+    }
+
+    .search-form:focus-within .search-input {
+        width: 15rem !important;
+        height: 3rem !important;
+        padding: 0.5rem 1rem;
+        
+    }
+
+    .search-icon {
+        background-color: transparent;
+        cursor: pointer;
+        border: none;
+        padding: 1rem;
+        border-radius: 50%;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .log-container button {
+        font-weight: bolder;
+        font-size: medium;
+        margin: auto 20px;
+        padding: 8px 20px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        width: auto;
+        height: 40px;
+        margin: auto 0 auto 30px;
+        
+    }
+    .log-container button:hover {
+        background: rgb(184, 184, 192);    
+        // border: 1px solid #fff;
+    }
+}
+
