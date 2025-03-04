@@ -5,6 +5,7 @@ import Login from '~/pages/login/index';
 import Booking from '~/pages/booking/index';
 import Sale from '~/pages/sale/index';
 import Intro from '~/pages/intro/index';
+import Search from '~/pages/search/index';
 
 
 const config = [
@@ -14,6 +15,7 @@ const config = [
     { path: '/login', component: Login, Lg: null },
     { path: '/booking', component: Booking},
     { path: '/sale', component: Sale},
-    { path: '/intro', component: Intro}
+    { path: '/intro', component: Intro},
+    { path: '/search', component: Search},
 ];
 export default config;

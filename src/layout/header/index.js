@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import styles from "./header.module.scss";
 import classNames from "classnames/bind";
@@ -8,6 +9,7 @@ import { LuMenu } from "react-icons/lu";
 const cx = classNames.bind(styles);
 
 function Header() {
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
@@ -16,7 +18,6 @@ function Header() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // phần này để xử lý ô tìm kiếm
   const handleFocus = () => setIsExpanded(true);
   const handleBlur = () => {
     setTimeout(() => {
@@ -26,8 +27,12 @@ function Header() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Searching for:", query);
+    if (query.trim()) {
+      console.log("Navigating to:", `/search?query=${encodeURIComponent(query)}`);
+      navigate(`/search?query=${encodeURIComponent(query)}`);
+    }
   };
+  
 
   return (
     <>
@@ -35,7 +40,6 @@ function Header() {
         <div className={cx("container")}>
           <div className={cx("header")}>
             <div className={cx("menu")}>
-              {/* Menu Trái */}
               <div className="col-xl-3">
                 <div className={cx("menu-left")}>
                   <div className={cx("menu-logo")} onClick={toggleSidebar}>
@@ -44,7 +48,7 @@ function Header() {
                   <h6 className={cx("menu-title")}>Menu</h6>
                 </div>
               </div>
-              {/* menu giữa */}
+
               <div className="col-xl-6">
                 <div className={cx("menu-center")}>
                   <a href="/" className={cx("logo")}>
@@ -53,10 +57,9 @@ function Header() {
                 </div>
               </div>
 
-              {/* Menu Phải */}
               <div className="col-xl-3">
                 <div className={cx("menu-right")}>
-                  {/* Ô tìm kiếm */}
+                  {/* search form  */}
                   <form className={cx("search-form", { expanded: isExpanded })} onSubmit={handleSubmit}>
                     <div className={cx("input-holder")}>
                       <input
@@ -74,9 +77,8 @@ function Header() {
                     </div>
                   </form>
 
-                  {/* Nút đăng nhập/đăng ký */}
                   <div className={cx("log-container")}>
-                    <a href="/#">
+                    <a href="/login">
                       <button>Đăng nhập/Đăng ký</button>
                     </a>
                   </div>
@@ -86,7 +88,6 @@ function Header() {
           </div>
         </div>
 
-        {/* Sidebar */}
         <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       </header>
     </>

@@ -50,29 +50,32 @@ function Sidebar({ isOpen, toggleSidebar }) {
                 </div>
 
                 <div className={cx("sidebar-middle")}>
-                    <a href="/intro" className={cx("intro")}>Giới thiệu</a>
-                    <a href="/sale" className={cx("sale")}>Khuyến mãi</a>
-                    <a href="/booking" className={cx("booking")}>Đặt phòng</a>
-                    
-                    {/* Dropdown dịch vụ (Mở ngang) */}
+                    <a href="/intro" className={cx("intro")}><p>Giới thiệu</p></a>
+                    <a href="/sale" className={cx("sale")}><p>Khuyến mãi</p></a>
+                    <a href="/booking" className={cx("booking")}><p>Đặt phòng</p></a>
+
+                    {/* Dropdown dịch vụ */}
                     <div className={cx("service-wrapper")}
-                    onMouseEnter={() => setIsServiceOpen(true)}
-                    onMouseLeave={() => setIsServiceOpen(false)}
-                >
-                    <div className={cx("row-middle")}>
-                        <span className={cx("service-text")}>Dịch vụ</span>
-                        <MdArrowDropDown className={cx("MdArrowDropDown")} />
-                    </div>
-                    {isServiceOpen && (
-                        <div className={cx("dropdown-menu")}>  
-                            <a href="/#">Đặt xe</a>
-                            <a href="/#">Giặt đồ</a>
-                            <a href="/#">Cửa hàng</a>
-                            <a href="/#">Đặt tiệc</a>
+                        onMouseEnter={() => setIsServiceOpen(true)}
+                        onMouseLeave={() => setIsServiceOpen(false)}
+                    >
+                        <div className={cx("row-middle")}>
+                            <span className={cx("service-text")}>Dịch vụ</span>
+                            <MdArrowDropDown className={cx("MdArrowDropDown")} />
                         </div>
-                    )}
-                </div>
-                    <a href="/booking" className={cx("booking")}>Đặt phòng</a>
+                        {isServiceOpen && (
+                            <div className={cx("dropdown-menu")}>
+                                <a href="/#">Đặt xe</a>
+                                <a href="/#">Giặt đồ</a>
+                                <a href="/#">Cửa hàng</a>
+                                <a href="/#">Đặt tiệc</a>
+                            </div>
+                        )}
+                        
+                    </div>
+                    <a href="/intro" className={cx("intro")}><p>Giới thiệu</p></a>
+                    <a href="/sale" className={cx("sale")}><p>Khuyến mãi</p></a>
+                    <a href="/booking" className={cx("booking")}><p>Đặt phòng</p></a>
                 </div>
 
                 {/* Sidebar bottom */}

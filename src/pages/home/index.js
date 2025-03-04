@@ -26,7 +26,7 @@ const Home = () => {
         },
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
-          items: 3
+          items: 2
         },
         tablet: {
           breakpoint: { max: 1024, min: 464 },
@@ -74,7 +74,7 @@ const Home = () => {
                             className={cx('slider')} 
                             infinite={true}
                             autoPlay={true}
-                            autoPlaySpeed={1500}
+                            autoPlaySpeed={3000}
                             >
                             {/* Mẫu cập nhật ảnh qua backend
                             {sliderItems.map((item, index) => (
@@ -93,9 +93,7 @@ const Home = () => {
                                 onClick={() => window.location.href = '/#'}
                                 key={key}
                             ></div>
-                            ))}
-                            
-                        
+                            ))} 
                         </Carousel>
                     </div>
                 </div>
