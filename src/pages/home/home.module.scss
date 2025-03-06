@@ -49,19 +49,21 @@
 
 
 .sale_slider {
-    max-width: 1250px;
+    max-width: 1300px;
     width: 100%;
+    justify-content: center;
     .slider_items {
-        width: 400px;
-        height: 200px;
+        width: 630px;
+        height: 315px;
         position: relative;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: top center;
         border-radius: 5px;
         border: none;
+        margin: 0 10px;
     }
     .react-multi-carousel-item {
-        margin: 5px;
+        margin: 0 10px;
     }
 }

@@ -7,42 +7,40 @@
     height: 100vh;
     background-color: #227EA9;
     display: flex;
-    flex-direction: column; /* Chia 3 phần theo chiều dọc */
+    flex-direction: column;
     transition: left 0.3s ease-in-out;
     padding-top: 40px;
     padding-bottom: 0px;
     z-index: 1000;
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-    
+
     a {
         text-decoration: none;
         color: white;
         display: block;
         font-size: 20px;
         transition: 0.3s;
-        padding: 10px; /* Tạo khoảng cách giữa chữ và viền */
-        margin: 5px; /* Khoảng cách giữa các mục */
-    }
-
-    a:hover {
-        background: #ffffff;
-        color: black;
-        padding-left: 15px;
+        padding: 10px;
+        margin: 5px;
+        
+        &:hover {
+            background: white;
+            color: black;
+            padding-left: 15px;
+        }
     }
 }
 
-/* Khi sidebar có class "active" -> Trượt vào màn hình */
+/* Khi sidebar mở */
 .sidebar.active {
     left: 0;
-    
 }
 
-
-/* Nút đóng (close-btn) */
+/* Nút đóng */
 .close-btn {
-    width: 50px; 
-    height: 50px; 
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,135 +50,121 @@
     position: absolute;
     top: 20px;
     right: 10px;
-    background: rgba(255, 255, 255, 0.2); 
-    border-radius: 5px; 
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transition: background 0.3s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
 }
 
-
+/* Phần trên cùng */
 .sidebar-top {
     background: #227EA9;
-    padding: 10px !important;
+    padding: 10px;
     border-bottom: 2px solid white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    
-    // .infor {
-    //     text-decoration: none;
-    //     color: white;
-    //     padding: 10px !important;
-    //     margin: 0 auto !important;
-    //     width: 50% !important;
-    //     height: auto !important;
-    //     display: flex !important;
-    //     align-items: center !important;
-    //     justify-content: center !important;
-    //     border: 2px solid white !important;
-    //     border-radius: 10px !important;
-    //     font-size: 20px !important;
-    // }
-
-    // .sale-infor {
-    //     margin: 10px !important;
-    //     margin-top: 20px !important;
-    //     font-size: xx-large !important;
-    // }
+    align-items: center;
     
     .avatar {
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        margin: 20px 15px;
-        margin-left: 30px;
+        margin: 20px 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: white;
+
         img {
             width: 90px;
             height: 90px;
             border-radius: 50%;
         }
-        
     } 
+
     .avatar:hover {
         padding: 0 !important; 
     }
-
     .user {
         margin: auto 0;
         a {
         }
     }
-
 }
 
-
-
-
-/* Phần giữa (5 phần) */
+/* Phần giữa */
 .sidebar-middle {
     background: #227EA9;
-    padding: 0px;
+    padding: 10px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 10px;
-    margin: 10px;
+    flex-grow: 1;
+
     a {
         margin: 10px;
         font-size: 20px;
     }
+    p {
+        font-size: 20px;
+    }
+
     .service-wrapper {
-        position: relative;
-        display: inline-block;
-        text-decoration: none;
-        color: white;
         display: block;
         font-size: 20px;
+        color: white;
         transition: 0.3s;
         border: none;
         margin: 10px;
         padding: 10px;
         cursor: pointer;
 
-    }
-    .service-wrapper:hover {
-        color: white;
-        padding-left: 15px;
+        &:hover {
+            color: white;
+            padding-left: 15px;
+        }
     }
 
-    
-    .dropdown-menu a {
-        font-size: large;
-        text-decoration: none;
-        color: white;
-        padding: 10px;
-        display: block;
-        transition: 0.3s;
+    /* Sidebar phụ nhỏ gọn */
+    .dropdown-menu {
+        position: absolute;
+        left: calc(40% + 10px); /* Đặt cạnh sidebar chính */
+        background-color: #D7D7E1;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        width: 180px; /* Chiều rộng nhỏ gọn */
+        
+        a {
+            font-size: 18px;
+            padding: 8px 12px;
+            color: #000;
+            display: block;
+            transition: 0.3s;
+
+
+            &:hover {
+                background: white;
+                color: black;
+                padding-left: 15px;
+            }
+        }
     }
-    
-    .dropdown-menu a:hover {
-        background-color: #f0f0f0;
-        color: black;
-    }
-    
+
     .row-middle {
         display: flex;
-        align-items: center; /* Căn giữa theo chiều dọc */
+        align-items: center;
         cursor: pointer;
     }
-    .MdArrowDropDown {
-        font-size: 24px; /* Tùy chỉnh kích thước mũi tên */
-        margin: auto 0;
-    }
 
+    .MdArrowDropDown {
+        font-size: 24px;
+        margin-left: 10px;
+    }
 }
 
-
-
-/* Phần dưới cùng (2.5 phần) */
+/* Phần dưới cùng */
 .sidebar-bottom {
     background: #666;
     padding: 10px;
@@ -188,7 +172,5 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: auto; /* Đảm bảo dính xuống dưới */
-
-
+    margin-top: auto;
 }
