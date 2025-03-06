@@ -6,6 +6,7 @@ import Sidebar from "./layout/sidebar/sidebar";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  
 
   useEffect(() => {
     const metaTag = document.createElement("meta");

@@ -106,6 +106,9 @@
         margin: 10px;
         font-size: 20px;
     }
+    p {
+        font-size: 20px;
+    }
 
     .service-wrapper {
         display: block;
@@ -126,7 +129,7 @@
     /* Sidebar phụ nhỏ gọn */
     .dropdown-menu {
         position: absolute;
-        left: calc(17% + 10px); /* Đặt cạnh sidebar chính */
+        left: calc(40% + 10px); /* Đặt cạnh sidebar chính */
         background-color: #D7D7E1;
         border-radius: 5px;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);

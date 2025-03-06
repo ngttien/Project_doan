@@ -43,7 +43,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
                                 <img src="/logo/test-avt.png" alt="Avatar" />
                             </a>
                             <div className={cx("user")}>
-                                <a className={cx("user-infor")} href="/#">Trần Văn A</a>
+                                <a className={cx("user-infor")} href="/user">Trần Văn A</a>
                             </div>
                         </div>
                     </div>

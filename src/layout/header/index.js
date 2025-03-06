@@ -28,10 +28,10 @@ function Header() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      console.log("Navigating to:", `/search?query=${encodeURIComponent(query)}`);
       navigate(`/search?query=${encodeURIComponent(query)}`);
     }
   };
+  
   
 
   return (
