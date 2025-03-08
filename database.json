@@ -1,0 +1,16 @@
+{
+    "users": {
+        "ID_user_1": {
+            "name": "Jonh",
+            "Phone": 123456789,
+            "mail": "jonhWick133@gmail.cokm",
+            "password": "123456"
+        },
+        "ID_user_2": {
+            "name": "Jonh",
+            "Phone": 123456789,
+            "mail": "jonhWick133@gmail.cokm",
+            "password": "123456"
+        }
+    }
+}
