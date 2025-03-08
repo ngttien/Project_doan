@@ -54,7 +54,7 @@ const Home = () => {
       ];
 
     return ( 
-        <home className={cx("home-container")}>
+        <home className={cx("home_container")}>
             <div className={cx('container')}>
                 <div className={cx('home')}>
                     <div className={cx('frame_intro')}>

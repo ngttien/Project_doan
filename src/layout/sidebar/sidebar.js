@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link
 import styles from "./sidebar.module.scss";
 import classNames from "classnames/bind";
 import { MdArrowDropDown } from "react-icons/md";
@@ -39,20 +40,20 @@ function Sidebar({ isOpen, toggleSidebar }) {
                 <div className={cx("sidebar-top")}>
                     <div className={cx("profile")}>
                         <div className={cx("row")}>
-                            <a className={cx("avatar")} href="/#">
+                            <Link className={cx("avatar")} to="#">
                                 <img src="/logo/test-avt.png" alt="Avatar" />
-                            </a>
+                            </Link>
                             <div className={cx("user")}>
-                                <a className={cx("user-infor")} href="/user">Trần Văn A</a>
+                                <Link className={cx("user-infor")} to="/user">Trần Văn A</Link>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className={cx("sidebar-middle")}>
-                    <a href="/intro" className={cx("intro")}><p>Giới thiệu</p></a>
-                    <a href="/sale" className={cx("sale")}><p>Khuyến mãi</p></a>
-                    <a href="/booking" className={cx("booking")}><p>Đặt phòng</p></a>
+                    <Link to="/intro" className={cx("intro")}><p>Giới thiệu</p></Link>
+                    <Link to="/sale" className={cx("sale")}><p>Khuyến mãi</p></Link>
+                    <Link to="/booking" className={cx("booking")}><p>Đặt phòng</p></Link>
 
                     {/* Dropdown dịch vụ */}
                     <div className={cx("service-wrapper")}
@@ -65,23 +66,23 @@ function Sidebar({ isOpen, toggleSidebar }) {
                         </div>
                         {isServiceOpen && (
                             <div className={cx("dropdown-menu")}>
-                                <a href="/#">Đặt xe</a>
-                                <a href="/#">Giặt đồ</a>
-                                <a href="/#">Cửa hàng</a>
-                                <a href="/#">Đặt tiệc</a>
+                                <Link to="/transport">Đặt xe</Link>
+                                <Link to="/laudry">Giặt đồ</Link>
+                                <Link to="/shop">Cửa hàng</Link>
+                                <Link to="/party">Đặt tiệc</Link>
                             </div>
                         )}
-                        
                     </div>
-                    <a href="/intro" className={cx("intro")}><p>Giới thiệu</p></a>
-                    <a href="/sale" className={cx("sale")}><p>Khuyến mãi</p></a>
-                    <a href="/booking" className={cx("booking")}><p>Đặt phòng</p></a>
+                    
+                    <Link to="/intro" className={cx("intro")}><p>Giới thiệu</p></Link>
+                    <Link to="/sale" className={cx("sale")}><p>Khuyến mãi</p></Link>
+                    <Link to="/booking" className={cx("booking")}><p>Đặt phòng</p></Link>
                 </div>
 
                 {/* Sidebar bottom */}
                 <div className={cx("sidebar-bottom")}>
-                    <a href="/#">Trợ giúp</a>
-                    <a href="/#">Gửi ý kiến phản hồi</a>
+                    <Link to="#">Trợ giúp</Link>
+                    <Link to="#">Gửi ý kiến phản hồi</Link>
                 </div>
             </nav>
         </>

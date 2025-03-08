@@ -19,6 +19,7 @@ body {
     width: 100%;
     padding-left: 15px;
     padding-right: 15px;
+    margin: 0 auto;
 }
 
 .row {
@@ -35,6 +36,10 @@ body {
     .col-xl-6 {
         flex: 0 0 40%;
         max-width: 40%;
+    }
+
+    .col-xl-7 {
+        flex: 1;
     }
 
     .col-lg-3 {
