@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 const UserPage = () => {
     return (
-        <div>
+        <div className={cx('sss')}>
             <h1>User Page</h1>
             <p>Welcome to the user page!</p>
         </div>

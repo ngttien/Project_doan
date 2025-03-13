@@ -6,17 +6,19 @@ import styles from './df.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
-function Defaultlayout({ children, ...props  }) {
+
+function Defaultlayout({ children, hideLayout, ...props }) {
     return (
         <div>
-            <Header></Header>
-            <Function></Function>
-            <Sidebar></Sidebar>
+            {!hideLayout && <Header />}
+            {!hideLayout && <Function />}
+            {!hideLayout && <Sidebar />}
             <div className={cx('iner')} {...props}>
                 <div>{children}</div>
             </div>
-            <Footer></Footer>
+            {!hideLayout && <Footer />}
         </div>
     );
 }
+
 export default Defaultlayout;

@@ -1,44 +1,101 @@
-import style from './register.module.scss';
+import React, { useState } from 'react';
+import styles from './register.module.scss';
 import classNames from 'classnames/bind';
+import { FaUser, FaLock, FaEnvelope, FaArrowLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import Button from '../../component/Button';
 
-const cx = classNames.bind(style);
+const cx = classNames.bind(styles);
+
 function Register() {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Registering with:", { username, email, password, confirmPassword });
+        // Xử lý đăng ký tại đây
+    };
+
     return (
-        <div className={cx('register-container')}>
-            <form action="">
-                <h1>Register</h1>
-                <div className={cx('input-container')}>
-                    <input type="text" name="username" id="username" placeholder="Username" required />
-                </div>
-                <div className={cx('input-container')}>
-                    <input type="email" name="email" id="email" placeholder="Email" required />
-                </div>
-                <div className={cx('input-container')}>
-                    <input type="password" name="password" id="password" placeholder="Password" required />
-                </div>
-                <div className={cx('input-container')}>
-                    <input
-                        type="password"
-                        name="confirm-password"
-                        id="confirm-password"
-                        placeholder="Confirm Password"
-                        required
+        <div className={cx("background_register")}> 
+            <div className={cx('register_container')}>
+                {/* Nút quay về Home */}
+                <Link to="/" className={cx("back_home")}>
+                    <FaArrowLeft className={cx("back_icon")} /> Home
+                </Link>
+
+                <form className={cx("register_form")} onSubmit={handleSubmit}>
+                    <div className={cx("register_title")}><h1>Register</h1></div>
+                    
+                    {/* Username */}
+                    <input 
+                        className={cx('input_username')}
+                        type="text" 
+                        name="username" 
+                        placeholder="Username" 
+                        required 
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
-                </div>
-                <div className={cx('input-container')}>
-                    <button type="submit">Register</button>
-                </div>
-                <div className="register-link">
-                    <p>
-                        Already have an account?{' '}
-                        <Button primary to={'/login'}>
-                            Login
-                        </Button>
-                    </p>
-                </div>
-            </form>
+                    <FaUser className={cx("icon")} />
+
+                    {/* Email */}
+                    <input 
+                        className={cx('input_email')}
+                        type="email" 
+                        name="email" 
+                        placeholder="Email" 
+                        required 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <FaEnvelope className={cx("icon")} />
+
+                    {/* Password */}
+                    <input 
+                        className={cx('input_password')}
+                        type="password" 
+                        name="password" 
+                        placeholder="Password" 
+                        required 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <FaLock className={cx("icon")} />
+
+                    {/* Confirm Password */}
+                    <input 
+                        className={cx('input_repassword')}
+                        type="password" 
+                        name="confirm_password" 
+                        placeholder="Confirm Password" 
+                        required 
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    <FaLock className={cx("icon")} />
+
+                    {/* Button Register */}
+                    <div className={cx('register_btn')}>
+                        <button type="submit" className={cx("register_button")}>Register</button>
+                    </div>
+
+                    {/* Login */}
+                    <div className={cx("login_link")}>
+                        <p>
+                            Already have an account? → 
+                            <Button className={cx("button_login")} primary to={'/login'}>
+                                Click Here
+                            </Button>
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
+
 export default Register;
