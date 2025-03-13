@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link
 import classNames from "classnames/bind";
 import styles from "./function.module.scss";
 import { MdArrowDropDown } from "react-icons/md";
-
 
 const cx = classNames.bind(styles);
 
@@ -16,9 +16,9 @@ function Function() {
                 <div className={cx('container')}>
                     <div className={cx('row')}>
                         <div className={cx('function')}>
-                            <a href="/intro" className={cx("intro")}>Giới thiệu</a>
-                            <a href="/sale" className={cx("sale")}>Khuyến mãi</a>
-                            <a href="/booking" className={cx("booking")}>Đặt phòng</a>
+                            <Link to="/intro" className={cx("intro")}>Giới thiệu</Link>
+                            <Link to="/sale" className={cx("sale")}>Khuyến mãi</Link>
+                            <Link to="/booking" className={cx("booking")}>Đặt phòng</Link>
                             <div className={cx("service-wrapper")}
                                 onMouseEnter={() => setIsServiceOpen(true)}
                                 onMouseLeave={() => setIsServiceOpen(false)}>
@@ -29,10 +29,10 @@ function Function() {
 
                                 {isServiceOpen && (
                                     <div className={cx("dropdown-menu")}>  
-                                        <a href="/#">Đặt xe</a>
-                                        <a href="/#">Giặt đồ</a>
-                                        <a href="/#">Cửa hàng</a>
-                                        <a href="/#">Đặt tiệc</a>
+                                        <Link to="/transport">Đặt xe</Link>
+                                        <Link to="/laudry">Giặt đồ</Link>
+                                        <Link to="/shop">Cửa hàng</Link>
+                                        <Link to="/party">Đặt tiệc</Link>
                                     </div>
                                 )}
                             </div>

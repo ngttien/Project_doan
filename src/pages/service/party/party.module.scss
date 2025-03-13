@@ -1,0 +1,68 @@
+.party_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.form_container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.party_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form_input {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+    cursor: pointer;
+}
+
+.form_row {
+    display: flex;
+    gap: 200px;
+    
+    .time_picker {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex: 1;
+
+    }
+}
+
+.time_input {
+    width: 15rem;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+}
+
+
+.submit_button {
+    padding: 10px;
+    border: 1px solid black;
+    background: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background: black;
+        color: white;
+    }
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link
 import { FaSearch } from "react-icons/fa";
 import styles from "./header.module.scss";
 import classNames from "classnames/bind";
@@ -31,8 +31,6 @@ function Header() {
       navigate(`/search?query=${encodeURIComponent(query)}`);
     }
   };
-  
-  
 
   return (
     <>
@@ -51,15 +49,15 @@ function Header() {
 
               <div className="col-xl-6">
                 <div className={cx("menu-center")}>
-                  <a href="/" className={cx("logo")}>
+                  <Link to="/" className={cx("logo")}>
                     <img src="/logo/logoweb.png" alt="Logo" />
-                  </a>
+                  </Link>
                 </div>
               </div>
 
               <div className="col-xl-3">
                 <div className={cx("menu-right")}>
-                  {/* search form  */}
+                  {/* search form */}
                   <form className={cx("search-form", { expanded: isExpanded })} onSubmit={handleSubmit}>
                     <div className={cx("input-holder")}>
                       <input
@@ -78,9 +76,9 @@ function Header() {
                   </form>
 
                   <div className={cx("log-container")}>
-                    <a href="/login">
+                    <Link to="/login">
                       <button>Đăng nhập/Đăng ký</button>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
