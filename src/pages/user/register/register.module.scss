@@ -1,0 +1,113 @@
+.background_register {
+    background-image: url('../../../assets/user/images/background/login_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register_container { //chứa form đăng ký
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        padding: 15px; /* Giảm padding để form nhỏ hơn */
+        width: 30%; /* Giảm width để form nhỏ hơn */
+
+        .back_home {
+            // position: absolute
+            // top: 15px;
+            // left: 15px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 10px;
+        
+            &:hover {
+                text-decoration: underline;
+            }
+        
+            .back_icon {
+                margin-right: 5px;
+            }
+        }
+
+    .register_form { //form đk
+        width: 100%;
+        padding:  20px 50px;
+        padding-top: 10px;
+        
+        .register_title {
+            margin: 10px auto;
+            h1 {
+                text-align: center;
+                font-size: 30px;
+                color: #fff;
+                font-weight: lighter;
+            }
+        }
+    }
+    
+
+    .input_username, .input_email, .input_password, .input_repassword {
+        background: transparent;
+        width: 70%;
+        padding: 15px 10px;
+        font-size: 14px;
+        border: 2px solid #537b35;
+        outline: none;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .icon {
+        color: #fff;
+        margin: auto 10px;
+    }
+
+    .register_btn {
+        margin-top: 20px;
+    }
+
+    .register_button {
+        width: 40%;
+        padding: 12px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #537b35;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .register_button:hover {
+        background-color: #6a9b4b;
+    }
+
+    .login_link {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    .button_login {
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 5px;
+        
+    }
+
+    .button_login:hover {
+        text-decoration: underline;
+        color: #fff;
+    }
+}

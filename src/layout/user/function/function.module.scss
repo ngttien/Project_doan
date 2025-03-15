@@ -1,0 +1,102 @@
+.function-container {
+    height: 120px;
+    width: 100%;
+    background-color: #e9e9f5;
+    text-align: left;
+    padding: 0; 
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.top_function {
+    margin: 0;
+    height: 70px;
+    width: 100%;
+}
+
+.bottom_function {
+    margin: 0;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 0;
+}
+
+.function {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+
+.function a {
+    text-decoration: none;
+}
+
+.intro, .sale, .booking, .service-wrapper {
+    text-decoration: none;
+    color: black;
+    display: block;
+    font-size: 25px;
+    transition: 0.3s;
+    border: none;
+    margin: auto 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.intro:hover, .sale:hover, .booking:hover , .service-wrapper:hover {
+    transform: scale(1.1);
+    padding: 5px 10px;
+
+}
+
+.service-wrapper {
+    position: relative;
+    display: inline-block;
+
+}
+.row {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    cursor: pointer;
+}
+.MdArrowDropDown {
+    font-size: 24px; /* Tùy chỉnh kích thước mũi tên */
+    margin: auto 0;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    font-size: large;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    display: block;
+    transition: 0.3s;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}

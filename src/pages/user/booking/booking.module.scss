@@ -1,0 +1,29 @@
+.booking_container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr; // Chia thành 2 cột bằng nhau
+    // gap: 20px;
+    
+}
+
+.booking_title {
+    font-size: 30px;
+    font-size: x-large;
+    margin: 20px auto;
+}
+
+
+
+.see_more {
+    text-align: right;
+    color: #007bff;
+    cursor: pointer;
+    margin-top: 20px;
+    
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
