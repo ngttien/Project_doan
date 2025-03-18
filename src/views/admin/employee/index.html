@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Viên - Hệ Thống Quản Lý Khách Sạn</title>
+    <link rel="stylesheet" href="/styles/admin.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">Admin</div>
+            <nav>
+                <ul>
+                    <li><a href="/admin/employee" class="active">Quản Lý Nhân Viên</a></li>
+                    <li><a href="/admin/customer">Quản Lý Khách Hàng</a></li>
+                    <li><a href="/admin/room">Quản Lý Phòng</a></li>
+                    <li><a href="/admin/booking">Quản Lý Đặt Phòng</a></li>
+                    <li><a href="/admin/service">Quản Lý Dịch Vụ</a></li>
+                    <li><a href="/admin/invoice">Quản Lý Hóa Đơn</a></li>
+                    <li><a href="/admin/revenue">Doanh Thu</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h1>Quản Lý Nhân Viên</h1>
+
+            <div class="alerts">
+                <div id="message" class="message success hidden"></div>
+                <div id="error" class="message error hidden"></div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Tìm kiếm nhân viên...">
+                <button id="search-btn">Tìm kiếm</button>
+            </div>
+
+            <div class="add-employee">
+                <form id="employee-form">
+                    <input type="text" id="name" placeholder="Họ và tên" required>
+                    <input type="text" id="position" placeholder="Chức vụ" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="tel" id="phone" placeholder="Số điện thoại" required>
+                    <button type="submit" id="add-btn">Thêm</button>
+                </form>
+            </div>
+
+            <div class="employee-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Họ và tên</th>
+                            <th>Chức vụ</th>
+                            <th>Email</th>
+                            <th>SĐT</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employee-list">
+                        <!-- Dữ liệu sẽ được nạp bằng JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm scripts -->
+    <script type="module">
+        // Import module
+        import EmployeeController from '/src/controllers/admin/EmployeeController.js';
+
+        // Khởi tạo controller
+        EmployeeController.init();
+    </script>
+</body>
+
+</html>

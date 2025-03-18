@@ -1,21 +1,17 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: 'AIzaSyBUNU64mjuRB8YbKl70KQok9fHTef2pyDI',
-    authDomain: 'hotel-03w7.firebaseapp.com',
-    projectId: 'hotel-03w7',
-    storageBucket: 'hotel-03w7.firebasestorage.app',
-    messagingSenderId: '722341252541',
-    appId: '1:722341252541:web:fe969b3be2e282496756d4',
-    measurementId: 'G-MZTQ9DFP1S',
+    apiKey: "AIzaSyDvOGLGoNGhAOs6qQN2YqRlpY7Qi1x1zds",
+    authDomain: "hotel-management-vaa-2025.firebaseapp.com",
+    databaseURL: "https://hotel-management-vaa-2025-default-rtdb.firebaseio.com",
+    projectId: "hotel-management-vaa-2025",
+    storageBucket: "hotel-management-vaa-2025.firebasestorage.app",
+    messagingSenderId: "734384514339",
+    appId: "1:734384514339:web:6a2b4ad52bcbf54659d896",
+    measurementId: "G-8B3R2HTPC2"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const auth = getAuth(app);
