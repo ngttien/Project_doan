@@ -19,7 +19,7 @@ import AdminRegister from '~/pages/admin/register/index';
 import AdminDashboard from '~/pages/admin/dashboard/index';
 import AdminEmployees from '~/pages/admin/employee/index';
 import AdminBooking from '~/pages/admin/booking/index';
-// import AdminCustomers from '~/pages/admin/customers/index';
+import AdminCustomers from '~/pages/admin/customers/index';
 import AdminRooms from '~/pages/admin/room/index';
 import AdminRoomTypes from '~/pages/admin/room_types/index';
 import AdminServices from '~/pages/admin/services/index';
@@ -46,7 +46,7 @@ const config = [
     { path: '/admin/', component: AdminDashboard, hideLayout: true },
     { path: '/admin/employees', component: AdminEmployees, hideLayout: true },
     { path: '/admin/bookings', component: AdminBooking, hideLayout: true },
-    // { path: '/admin/customers', component: AdminCustomers },
+    { path: '/admin/customers', component: AdminCustomers, hideLayout: true },
     { path: '/admin/rooms', component: AdminRooms, hideLayout: true },
     { path: '/admin/room_types', component: AdminRoomTypes, hideLayout: true },
     { path: '/admin/services', component: AdminServices, hideLayout: true },

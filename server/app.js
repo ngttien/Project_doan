@@ -8,6 +8,7 @@ const admin = require('firebase-admin');
 const cors = require('cors');
 const roomRoutes = require('./routes/roomRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const customerRoutes = require('./routes/customerRoutes');
 
 if (admin.apps.length === 0) {
     admin.initializeApp({
@@ -41,6 +42,7 @@ const authenticateToken = async (req, res, next) => {
 app.use('/api', authenticateToken, apiRoutes);
 app.use('/api', roomRoutes);
 app.use('/api', serviceRoutes);
+app.use('/api', customerRoutes);
 app.use(express.static(path.join(__dirname, '../public')));
 
 const PORT = process.env.PORT || 5000;

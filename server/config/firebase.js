@@ -1,6 +1,7 @@
 const admin = require('firebase-admin');
 const dotenv = require('dotenv');
 dotenv.config();
+
 const serviceAccount = {
     type: process.env.GOOGLE_TYPE,
     project_id: process.env.GOOGLE_PROJECT_ID,
