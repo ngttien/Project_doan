@@ -1,21 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import AppUser from './AppUser';
+import AppAdmin from './AppAdmin';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './component/GlobalStyle';
 import './style/style.scss';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Kiểm tra đường dẫn URL, nếu bắt đầu bằng "/admin" thì render AppAdmin
+const isAdmin = window.location.pathname.startsWith('/admin');
+
 root.render(
     <React.StrictMode>
         <GlobalStyle>
-            <App />
+            {isAdmin ? <AppAdmin /> : <AppUser />}
         </GlobalStyle>
     </React.StrictMode>,
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Ghi log hiệu suất
 reportWebVitals();

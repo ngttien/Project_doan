@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom'; // Import Link
-import styles from './loginAdmin.module.scss';
+import { Link } from 'react-router-dom'; // Import Link
+import styles from './login.module.scss';
 import classNames from 'classnames/bind';
-import { FaUser, FaLock } from 'react-icons/fa'; // Import icon
-// import Button from '../../../component/Button/index';
+import { FaUser, FaLock, FaArrowLeft } from 'react-icons/fa'; // Import icon
+import Button from '../../../component/Button/index';
 
 const cx = classNames.bind(styles);
 
@@ -20,10 +20,10 @@ function Login() {
     return (
         <div className={cx('background_login')}>
             <div className={cx('login_container')}>
-                {/* Nút quay về Home
+                {/* Nút quay về Home */}
                 <Link to="/" className={cx('back_home')}>
                     <FaArrowLeft className={cx('back_icon')} /> Home
-                </Link> */}
+                </Link>
 
                 <form className={cx('login_form')} onSubmit={handleSubmit}>
                     <div className={cx('login_title')}>
@@ -59,7 +59,7 @@ function Login() {
                         <label className={cx('remember_label')}>
                             <input type="checkbox" name="remember" /> Remember me
                         </label>
-                        <a href="/forgotAdmin" className={cx('forgot_password')}>
+                        <a href="/forgot" className={cx('forgot_password')}>
                             Forgot password?
                         </a>
                     </div>
@@ -72,14 +72,14 @@ function Login() {
                     </div>
 
                     {/* Register */}
-                    {/* <div className={cx('register_link')}>
+                    <div className={cx('register_link')}>
                         <p>
                             To register new account →
                             <Button className={cx('button_regis')} primary to={'/register'}>
                                 Click Here
                             </Button>
                         </p>
-                    </div> */}
+                    </div>
                 </form>
             </div>
         </div>

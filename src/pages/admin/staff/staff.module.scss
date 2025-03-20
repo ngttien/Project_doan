@@ -1,0 +1,57 @@
+.staff_container {
+    padding: 20px;
+}
+
+.search_add {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    input {
+        padding: 8px;
+        width: 250px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .search_button {
+        background-color: #ddd;
+    }
+
+    .add_button {
+        background-color: #4CAF50;
+        color: white;
+    }
+}
+
+.staff_table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    .active {
+        color: green;
+        font-weight: bold;
+    }
+
+    .inactive {
+        color: red;
+        font-weight: bold;
+    }
+}
