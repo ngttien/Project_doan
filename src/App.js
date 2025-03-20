@@ -1,39 +1,18 @@
-import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DefaultLayout from "./defaultlayout";
-import Config from "./routes";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AdminPage from '../src/pages/admin/dashboard/index';
+import HomePage from '../src/pages/user/home/index';
+import BookingPage from "./pages/user/booking/BookingPage";
 
 function App() {
-    useEffect(() => {
-        const metaTag = document.createElement("meta");
-        metaTag.name = "viewport";
-        metaTag.content = "width=device-width, initial-scale=1.0";
-        document.head.appendChild(metaTag);
-        return () => document.head.removeChild(metaTag);
-    }, []);
-
-    return (
-        <Router>
-            <div className="app-container">
-                <Routes>
-                    {Config.map((route, idx) => {
-                        const Page = route.component;
-                        return (
-                            <Route
-                                key={idx}
-                                path={route.path}
-                                element={
-                                    <DefaultLayout hideLayout={route.hideLayout}>
-                                        <Page />
-                                    </DefaultLayout>
-                                }
-                            />
-                        );
-                    })}
-                </Routes>
-            </div>
-        </Router>
-    );
+  return (
+    <Router>
+      <BookingPage />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

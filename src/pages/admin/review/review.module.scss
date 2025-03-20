@@ -1,0 +1,85 @@
+.review-container {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px !important;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .comment {
+    flex-direction: column;
+    width: 200px; /* Cố định chiều rộng */
+    word-wrap: break-word; /* Xuống dòng khi nội dung quá dài */
+    overflow-wrap: break-word; /* Hỗ trợ xuống dòng trên tất cả trình duyệt */
+    text-align: left; /* Căn trái nội dung */
+    
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .review-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .review-table th, .review-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .approve-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .approve-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .show-btn {
+    background-color: #ffc107;
+    color: black;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .show-btn:hover {
+    background-color: #e0a800;
+  }
+  
+  .comment-text {
+    font-size: medium;
+    margin-top: 5px;
+    padding: 5px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    display: block;
+    word-wrap: break-word; /* Đảm bảo xuống dòng */
+  }

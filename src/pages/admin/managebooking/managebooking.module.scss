@@ -1,0 +1,72 @@
+
+.booking_container {
+    width: 90%;
+    margin: 30px;
+    padding: 20px;
+}
+
+.add_booking {
+    border: 1px solid #ddd; /* Thêm viền nếu cần */
+    border-radius: 5px;
+    padding: 20px;
+}
+
+
+
+.form_client {
+    display: grid;
+    margin-bottom: 20px;
+    font-size: large;
+
+    input {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    button {
+        grid-column: span 2;
+        padding: 8px;
+        background: black;
+        color: white;
+        border: none;
+        cursor: pointer;
+        width: 10%;
+    }
+    select {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    span {
+        font-weight: bold;
+        font-size: small;
+        margin-bottom: 0 !important;
+    }
+
+    .success_message {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeOut 3s forwards;
+    }
+    
+    @keyframes fadeOut {
+        0% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+    
+}
+
+
