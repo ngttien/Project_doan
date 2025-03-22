@@ -1,13 +1,19 @@
+// src/pages/admin/rooms/index.js
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import '~/style/admin/admin.scss';
-import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import styles from './room.module.scss';
+import classNames from 'classnames/bind';
+import { FaSearch } from "react-icons/fa";
 import { auth } from '~/firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+
+const cx = classNames.bind(styles);
 
 const AdminRooms = () => {
     const [rooms, setRooms] = useState([]);
     const [roomTypes, setRoomTypes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState(''); // Thêm state cho tìm kiếm
     const [newRoom, setNewRoom] = useState({
         room_id: '',
         type_id: '',
@@ -16,15 +22,26 @@ const AdminRooms = () => {
         status: 'available',
         description: '',
     });
+    const [user, setUser] = useState(null);
     const [message, setMessage] = useState('');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
-        fetchRooms();
-        fetchRoomTypes();
-    }, []);
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser) {
+                setUser(currentUser);
+                const tokenResult = await currentUser.getIdTokenResult();
+                console.log('User role:', tokenResult.claims.role);
+                fetchRooms();
+                fetchRoomTypes();
+            } else {
+                setLoading(false);
+                navigate('/admin/login');
+            }
+        });
+
+        return () => unsubscribe();
+    }, [navigate]);
 
     const fetchRooms = async () => {
         try {
@@ -115,11 +132,6 @@ const AdminRooms = () => {
         }
     };
 
-    const handleNavigate = (path) => {
-        navigate(path);
-        setIsSidebarOpen(false);
-    };
-
     const handleRoomTypeChange = (e) => {
         const selectedTypeId = e.target.value;
         const selectedRoomType = roomTypes.find(type => type.type_id === selectedTypeId);
@@ -128,160 +140,130 @@ const AdminRooms = () => {
         setNewRoom({
             ...newRoom,
             type_id: selectedTypeId,
-            room_price: defaultPrice || '', // Tự động điền giá mặc định
+            room_price: defaultPrice || '',
         });
     };
+
     const selectedRoomType = roomTypes.find(type => type.type_id === newRoom.type_id);
     const defaultPrice = selectedRoomType ? selectedRoomType.default_price : '';
+
+    // Lọc danh sách phòng theo searchTerm
+    const filteredRooms = rooms.filter(room =>
+        room.room_id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className="admin-container">
-            <button className="hamburger" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                ☰
-            </button>
-            {isSidebarOpen && <div className="backdrop" onClick={() => setIsSidebarOpen(false)} />}
-            <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                <ul>
-                    <li className={location.pathname === '/admin' ? 'active' : ''} onClick={() => handleNavigate('/admin')}>
-                        Doanh Thu
-                    </li>
-                    <li className={location.pathname === '/admin/employees' ? 'active' : ''} onClick={() => handleNavigate('/admin/employees')}>
-                        Quản Lý Nhân Viên
-                    </li>
-                    <li className={location.pathname === '/admin/customers' ? 'active' : ''} onClick={() => handleNavigate('/admin/customers')}>
-                        Quản Lý Khách Hàng
-                    </li>
-                    <li className={location.pathname === '/admin/rooms' ? 'active' : ''} onClick={() => handleNavigate('/admin/rooms')}>
-                        Quản Lý Phòng
-                    </li>
-                    <li className={location.pathname === '/admin/room_types' ? 'active' : ''} onClick={() => handleNavigate('/admin/room_types')}>
-                        Quản Lý Loại Phòng
-                    </li>
-                    <li className={location.pathname === '/admin/bookings' ? 'active' : ''} onClick={() => handleNavigate('/admin/bookings')}>
-                        Quản Lý Đặt Phòng
-                    </li>
-                    <li className={location.pathname === '/admin/services' ? 'active' : ''} onClick={() => handleNavigate('/admin/services')}>
-                        Quản Lý Dịch Vụ
-                    </li>
-                    <li className={location.pathname === '/admin/invoices' ? 'active' : ''} onClick={() => handleNavigate('/admin/invoices')}>
-                        Quản Lý Hóa Đơn
-                    </li>
-                    <li className={location.pathname === '/admin/statistics' ? 'active' : ''} onClick={() => handleNavigate('/admin/statistics')}>
-                        Thống Kê Gần Đây
-                    </li>
-                </ul>
-                <button className="logout-btn" onClick={handleLogout}>
-                    Đăng xuất
-                </button>
+        <div className={cx("room_container")}>
+            <h1>Quản Lý Phòng</h1>
+            {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
+            <div className={cx("search_add")}>
+                <input
+                    type="text"
+                    placeholder="Tìm kiếm phòng theo mã..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {/* <button onClick={() => setShowForm(true)}>Thêm</button> */}
             </div>
-            <div className="main-content">
-                <h1>Admin - Quản Lý Phòng</h1>
-                {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
-                <div className="add-form">
-                    <h2>Thêm Phòng</h2>
-                    <form onSubmit={handleAddRoom}>
-                        <div className="form-group">
-                            <label>Mã phòng</label>
-                            <input
-                                type="text"
-                                placeholder="Mã phòng"
-                                value={newRoom.room_id}
-                                onChange={(e) => setNewRoom({ ...newRoom, room_id: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Loại phòng</label>
-                            <select
-                                value={newRoom.type_id}
-                                onChange={(e) => setNewRoom({ ...newRoom, type_id: e.target.value })}
-                                required
-                            >
-                                <option value="" disabled>Chọn loại phòng</option>
-                                {roomTypes.map(type => (
-                                    <option key={type.type_id} value={type.type_id}>
-                                        {type.type_name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label>Giá phòng</label>
-                            {newRoom.type_id && (
-                                <p>{defaultPrice} VNĐ</p>
-                            )}
-                        </div>
-                        {/* <div className="form-group">
-                            <label>Giá phòng</label>
-                            <input
-                                type="number"
-                                placeholder="Giá phòng (mặc định nếu để trống)"
-                                value={newRoom.room_price}
-                                onChange={(e) => setNewRoom({ ...newRoom, room_price: e.target.value })}
-                            />
-                        </div> */}
-                        <div className="form-group">
-                            <label>Số người tối đa</label>
-                            <input
-                                type="number"
-                                placeholder="Số người tối đa"
-                                value={newRoom.max_occupancy}
-                                onChange={(e) => setNewRoom({ ...newRoom, max_occupancy: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Trạng thái</label>
-                            <select
-                                value={newRoom.status}
-                                onChange={(e) => setNewRoom({ ...newRoom, status: e.target.value })}
-                                required
-                            >
-                                <option value="available">Có sẵn</option>
-                                <option value="occupied">Đã đặt</option>
-                                <option value="maintenance">Bảo trì</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label>Mô tả</label>
-                            <input
-                                type="text"
-                                placeholder="Mô tả"
-                                value={newRoom.description}
-                                onChange={(e) => setNewRoom({ ...newRoom, description: e.target.value })}
-                            />
-                        </div>
-                        <button type="submit">Thêm</button>
-                    </form>
-                </div>
-                <h2>Danh Sách Phòng</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mã Phòng</th>
-                            <th>Loại Phòng</th>
-                            <th>Giá Phòng</th>
-                            <th>Số Người Tối Đa</th>
-                            <th>Trạng Thái</th>
-                            <th>Mô Tả</th>
+
+            <div className={cx("add_form")}>
+                <h2>Thêm Phòng</h2>
+                <form onSubmit={handleAddRoom}>
+                    <div className={cx("form_group")}>
+                        <label>Mã phòng</label>
+                        <input
+                            type="text"
+                            placeholder="Mã phòng"
+                            value={newRoom.room_id}
+                            onChange={(e) => setNewRoom({ ...newRoom, room_id: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className={cx("form_group")}>
+                        <label>Loại phòng</label>
+                        <select
+                            value={newRoom.type_id}
+                            onChange={handleRoomTypeChange} // Sử dụng handleRoomTypeChange
+                            required
+                        >
+                            <option value="" disabled>Chọn loại phòng</option>
+                            {roomTypes.map(type => (
+                                <option key={type.type_id} value={type.type_id}>
+                                    {type.type_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className={cx("form_group")}>
+                        <label>Giá phòng</label>
+                        {newRoom.type_id ? (
+                            <p>{defaultPrice} VNĐ</p>
+                        ) : (
+                            <p>Chọn loại phòng để xem giá</p>
+                        )}
+                    </div>
+                    <div className={cx("form_group")}>
+                        <label>Số người tối đa</label>
+                        <input
+                            type="number"
+                            placeholder="Số người tối đa"
+                            value={newRoom.max_occupancy}
+                            onChange={(e) => setNewRoom({ ...newRoom, max_occupancy: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className={cx("form_group")}>
+                        <label>Trạng thái</label>
+                        <select
+                            value={newRoom.status}
+                            onChange={(e) => setNewRoom({ ...newRoom, status: e.target.value })}
+                            required
+                        >
+                            <option value="available">Có sẵn</option>
+                            <option value="occupied">Đã đặt</option>
+                            <option value="maintenance">Bảo trì</option>
+                        </select>
+                    </div>
+                    <div className={cx("form_group")}>
+                        <label>Mô tả</label>
+                        <input
+                            type="text"
+                            placeholder="Mô tả"
+                            value={newRoom.description}
+                            onChange={(e) => setNewRoom({ ...newRoom, description: e.target.value })}
+                        />
+                    </div>
+                    <button type="submit">Thêm</button>
+                </form>
+            </div>
+
+            <h2>Danh Sách Phòng</h2>
+            <table className={cx("room_table")}>
+                <thead>
+                    <tr>
+                        <th>Mã Phòng</th>
+                        <th>Loại Phòng</th>
+                        <th>Giá Phòng</th>
+                        <th>Số Người Tối Đa</th>
+                        <th>Trạng Thái</th>
+                        <th>Mô Tả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredRooms.map(room => (
+                        <tr key={room.room_id}>
+                            <td>{room.room_id}</td>
+                            <td>{roomTypes.find(type => type.type_id === room.type_id)?.type_name || 'Không xác định'}</td>
+                            <td>{room.room_price}</td>
+                            <td>{room.max_occupancy}</td>
+                            <td>{room.status}</td>
+                            <td>{room.description}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {rooms.map(room => (
-                            <tr key={room.room_id}>
-                                <td>{room.room_id}</td>
-                                <td>{roomTypes.find(type => type.type_id === room.type_id)?.type_name || 'Không xác định'}</td>
-                                <td>{room.room_price}</td>
-                                <td>{room.max_occupancy}</td>
-                                <td>{room.status}</td>
-                                <td>{room.description}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

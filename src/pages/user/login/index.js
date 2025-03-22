@@ -1,20 +1,60 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './login.module.scss';
 import classNames from 'classnames/bind';
-import { FaUser, FaLock, FaArrowLeft } from 'react-icons/fa'; // Import icon
+import { FaUser, FaLock, FaArrowLeft, FaEnvelope } from 'react-icons/fa';
 import Button from '../../../component/Button/index';
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+import { auth } from '~/firebase';
 
 const cx = classNames.bind(styles);
 
 function Login() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Logging in with:', { username, password });
-        // Xử lý login tại đây
+        setError('');
+        setSuccess('');
+
+        try {
+            // Thiết lập persistence dựa trên lựa chọn "Remember me"
+            const persistence = rememberMe ? browserLocalPersistence : browserSessionPersistence;
+            await setPersistence(auth, persistence);
+
+            // Đăng nhập với Firebase Authentication
+            await signInWithEmailAndPassword(auth, email, password);
+
+            // Hiển thị thông báo thành công
+            setSuccess('Đăng nhập thành công! Đang chuyển hướng...');
+            setTimeout(() => {
+                navigate('/'); // Điều hướng đến trang chính sau 2 giây
+            }, 2000);
+        } catch (error) {
+            console.error('Login error:', error);
+            // Xử lý các lỗi cụ thể từ Firebase
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    setError('Email không tồn tại. Vui lòng kiểm tra lại!');
+                    break;
+                case 'auth/wrong-password':
+                    setError('Mật khẩu không đúng. Vui lòng thử lại!');
+                    break;
+                case 'auth/invalid-email':
+                    setError('Email không hợp lệ. Vui lòng kiểm tra lại!');
+                    break;
+                case 'auth/invalid-credential':
+                    setError('Thông tin đăng nhập không hợp lệ. Vui lòng kiểm tra lại email hoặc mật khẩu!');
+                    break;
+                default:
+                    setError('Đăng nhập thất bại: ' + error.message);
+            }
+        }
     };
 
     return (
@@ -30,17 +70,23 @@ function Login() {
                         <h1>Login</h1>
                     </div>
 
-                    {/* Username */}
+                    {/* Hiển thị thông báo thành công nếu có */}
+                    {success && <p className={cx("success")}>{success}</p>}
+
+                    {/* Hiển thị thông báo lỗi nếu có */}
+                    {error && <p className={cx("error")}>{error}</p>}
+
+                    {/* Email */}
                     <input
-                        className={cx('input_username')}
-                        type="text"
-                        name="username"
-                        placeholder="Username"
+                        className={cx('input_email')}
+                        type="email"
+                        name="email"
+                        placeholder="Email"
                         required
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
-                    <FaUser className={cx('icon')} />
+                    <FaEnvelope className={cx('icon')} />
 
                     {/* Password */}
                     <input
@@ -57,7 +103,13 @@ function Login() {
                     {/* Remember me & Forgot password */}
                     <div className={cx('remember_forgot')}>
                         <label className={cx('remember_label')}>
-                            <input type="checkbox" name="remember" /> Remember me
+                            <input
+                                type="checkbox"
+                                name="remember"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)} // Cập nhật state khi checkbox thay đổi
+                            />
+                            Remember me
                         </label>
                         <a href="/forgot" className={cx('forgot_password')}>
                             Forgot password?

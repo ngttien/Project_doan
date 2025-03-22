@@ -2,31 +2,30 @@ import React, { useState } from 'react';
 import styles from './register.module.scss';
 import classNames from 'classnames/bind';
 import { FaUser, FaLock, FaEnvelope, FaArrowLeft } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom'; // Thêm useNavigate
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'; // Thêm Firebase Auth
-import { auth } from '~/firebase'; // Thêm auth từ Firebase
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from '~/firebase';
 import Button from '../../../component/Button/index';
 
 const cx = classNames.bind(styles);
 
 function Register() {
-
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    // const [phone, setPhone] = useState(''); // Thêm state cho phone
-    // const [address, setAddress] = useState(''); // Thêm state cho address
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState(''); // Thêm state để hiển thị lỗi
-    const navigate = useNavigate(); // Khởi tạo useNavigate
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setSuccess('');
 
         // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp không
         if (password !== confirmPassword) {
-            setError('Mật khẩu và xác nhận mật khẩu không khớp');
+            setError('Mật khẩu và xác nhận mật khẩu không khớp!');
             return;
         }
 
@@ -39,7 +38,7 @@ function Register() {
             await updateProfile(user, { displayName: username });
 
             // Lưu thông tin khách hàng vào Firestore
-            const customerData = { name: username, email }//, phone, address };
+            const customerData = { name: username, email };
             const token = await user.getIdToken();
             const response = await fetch('http://localhost:5000/api/customers', {
                 method: 'POST',
@@ -52,14 +51,30 @@ function Register() {
 
             if (!response.ok) {
                 const errorText = await response.text();
-                throw new Error(`Failed to save customer data: ${errorText || response.statusText}`);
+                throw new Error(`Lưu thông tin khách hàng thất bại: ${errorText || response.statusText}`);
             }
 
             console.log('Customer registered:', await response.json());
-            navigate('/login'); // Điều hướng đến trang đăng nhập
+            setSuccess('Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...');
+            setTimeout(() => {
+                navigate('/login'); // Điều hướng đến trang đăng nhập sau 2 giây
+            }, 2000);
         } catch (error) {
             console.error('Registration error:', error);
-            setError(error.message);
+            // Xử lý các lỗi cụ thể từ Firebase
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    setError('Email đã được sử dụng. Vui lòng chọn email khác!');
+                    break;
+                case 'auth/invalid-email':
+                    setError('Email không hợp lệ. Vui lòng kiểm tra lại!');
+                    break;
+                case 'auth/weak-password':
+                    setError('Mật khẩu quá yếu. Mật khẩu phải có ít nhất 6 ký tự!');
+                    break;
+                default:
+                    setError('Đăng ký thất bại: ' + error.message);
+            }
         }
     };
 
@@ -73,6 +88,9 @@ function Register() {
 
                 <form className={cx("register_form")} onSubmit={handleSubmit}>
                     <div className={cx("register_title")}><h1>Register</h1></div>
+
+                    {/* Hiển thị thông báo thành công nếu có */}
+                    {success && <p className={cx("success")}>{success}</p>}
 
                     {/* Hiển thị thông báo lỗi nếu có */}
                     {error && <p className={cx("error")}>{error}</p>}
@@ -100,28 +118,6 @@ function Register() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <FaEnvelope className={cx('icon')} />
-
-                    {/* Phone
-                    <input
-                        className={cx('input_phone')}
-                        type="text"
-                        name="phone"
-                        placeholder="Phone Number"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
-                    <FaUser className={cx("icon")} /> */}
-
-                    {/* Address
-                    <input
-                        className={cx('input_address')}
-                        type="text"
-                        name="address"
-                        placeholder="Address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
-                    <FaUser className={cx("icon")} /> */}
 
                     {/* Password */}
                     <input

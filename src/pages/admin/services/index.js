@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import '~/style/admin/admin.scss';
-import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import styles from './services.module.scss';
+import classNames from 'classnames/bind';
+import { FaSearch } from "react-icons/fa";
 import { auth } from '~/firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+
+const cx = classNames.bind(styles);
 
 const AdminServices = () => {
     const [services, setServices] = useState([]);
@@ -12,15 +16,26 @@ const AdminServices = () => {
         price: '',
         description: '',
     });
+    const [user, setUser] = useState(null);
     const [editService, setEditService] = useState(null);
     const [message, setMessage] = useState('');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
-        fetchServices();
-    }, []);
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser) {
+                setUser(currentUser);
+                const tokenResult = await currentUser.getIdTokenResult();
+                console.log('User role:', tokenResult.claims.role);
+                fetchServices();
+            } else {
+                setLoading(false);
+                navigate('/admin/login');
+            }
+        });
+
+        return () => unsubscribe();
+    }, [navigate]);
 
     const fetchServices = async () => {
         try {
@@ -144,120 +159,74 @@ const AdminServices = () => {
         }
     };
 
-    const handleNavigate = (path) => {
-        navigate(path);
-        setIsSidebarOpen(false);
-    };
-
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className="admin-container">
-            <button className="hamburger" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                ☰
-            </button>
-            {isSidebarOpen && <div className="backdrop" onClick={() => setIsSidebarOpen(false)} />}
-            <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                <h3>Doanh Thu</h3>
-                <ul>
-                    <li className={location.pathname === '/admin' ? 'active' : ''} onClick={() => handleNavigate('/admin')}>
-                        Doanh Thu
-                    </li>
-                    <li className={location.pathname === '/admin/employees' ? 'active' : ''} onClick={() => handleNavigate('/admin/employees')}>
-                        Quản Lý Nhân Viên
-                    </li>
-                    <li className={location.pathname === '/admin/customers' ? 'active' : ''} onClick={() => handleNavigate('/admin/customers')}>
-                        Quản Lý Khách Hàng
-                    </li>
-                    <li className={location.pathname === '/admin/rooms' ? 'active' : ''} onClick={() => handleNavigate('/admin/rooms')}>
-                        Quản Lý Phòng
-                    </li>
-                    <li className={location.pathname === '/admin/room_types' ? 'active' : ''} onClick={() => handleNavigate('/admin/room_types')}>
-                        Quản Lý Loại Phòng
-                    </li>
-                    <li className={location.pathname === '/admin/bookings' ? 'active' : ''} onClick={() => handleNavigate('/admin/bookings')}>
-                        Quản Lý Đặt Phòng
-                    </li>
-                    <li className={location.pathname === '/admin/services' ? 'active' : ''} onClick={() => handleNavigate('/admin/services')}>
-                        Quản Lý Dịch Vụ
-                    </li>
-                    <li className={location.pathname === '/admin/invoices' ? 'active' : ''} onClick={() => handleNavigate('/admin/invoices')}>
-                        Quản Lý Hóa Đơn
-                    </li>
-                    <li className={location.pathname === '/admin/statistics' ? 'active' : ''} onClick={() => handleNavigate('/admin/statistics')}>
-                        Thống Kê Gần Đây
-                    </li>
-                </ul>
-                <button className="logout-btn" onClick={handleLogout}>
-                    Đăng xuất
-                </button>
+        <div className={cx("staff_container")}>
+            <h1>Admin - Quản Lý Dịch Vụ</h1>
+            {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
+            <div className={cx("add-form")}>
+                <h2>{editService ? 'Cập nhật Dịch Vụ' : 'Thêm Dịch Vụ'}</h2>
+                <form onSubmit={editService ? handleUpdateService : handleAddService}>
+                    <div className="form-group">
+                        <label>Tên dịch vụ</label>
+                        <input
+                            type="text"
+                            placeholder="Tên dịch vụ"
+                            value={editService ? editService.name : newService.name}
+                            onChange={(e) => editService ? setEditService({ ...editService, name: e.target.value }) : setNewService({ ...newService, name: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Giá</label>
+                        <input
+                            type="number"
+                            placeholder="Giá"
+                            value={editService ? editService.price : newService.price}
+                            onChange={(e) => editService ? setEditService({ ...editService, price: e.target.value }) : setNewService({ ...newService, price: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Mô tả</label>
+                        <input
+                            type="text"
+                            placeholder="Mô tả"
+                            value={editService ? editService.description : newService.description}
+                            onChange={(e) => editService ? setEditService({ ...editService, description: e.target.value }) : setNewService({ ...newService, description: e.target.value })}
+                        />
+                    </div>
+                    <button type="submit">{editService ? 'Cập nhật' : 'Thêm'}</button>
+                    {editService && <button type="button" onClick={() => setEditService(null)}>Hủy</button>}
+                </form>
             </div>
-            <div className="main-content">
-                <h1>Admin - Quản Lý Dịch Vụ</h1>
-                {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
-                <div className="add-form">
-                    <h2>{editService ? 'Cập nhật Dịch Vụ' : 'Thêm Dịch Vụ'}</h2>
-                    <form onSubmit={editService ? handleUpdateService : handleAddService}>
-                        <div className="form-group">
-                            <label>Tên dịch vụ</label>
-                            <input
-                                type="text"
-                                placeholder="Tên dịch vụ"
-                                value={editService ? editService.name : newService.name}
-                                onChange={(e) => editService ? setEditService({ ...editService, name: e.target.value }) : setNewService({ ...newService, name: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Giá</label>
-                            <input
-                                type="number"
-                                placeholder="Giá"
-                                value={editService ? editService.price : newService.price}
-                                onChange={(e) => editService ? setEditService({ ...editService, price: e.target.value }) : setNewService({ ...newService, price: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Mô tả</label>
-                            <input
-                                type="text"
-                                placeholder="Mô tả"
-                                value={editService ? editService.description : newService.description}
-                                onChange={(e) => editService ? setEditService({ ...editService, description: e.target.value }) : setNewService({ ...newService, description: e.target.value })}
-                            />
-                        </div>
-                        <button type="submit">{editService ? 'Cập nhật' : 'Thêm'}</button>
-                        {editService && <button type="button" onClick={() => setEditService(null)}>Hủy</button>}
-                    </form>
-                </div>
-                <h2>Danh Sách Dịch Vụ</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mã Dịch Vụ</th>
-                            <th>Tên Dịch Vụ</th>
-                            <th>Giá</th>
-                            <th>Mô Tả</th>
-                            <th>Hành động</th>
+            <h2>Danh Sách Dịch Vụ</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã Dịch Vụ</th>
+                        <th>Tên Dịch Vụ</th>
+                        <th>Giá</th>
+                        <th>Mô Tả</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {services.map(service => (
+                        <tr key={service.service_id}>
+                            <td>{service.service_id}</td>
+                            <td>{service.name}</td>
+                            <td>{service.price} VNĐ</td>
+                            <td>{service.description}</td>
+                            <td>
+                                <button onClick={() => setEditService(service)}>Sửa</button>
+                                <button onClick={() => handleDeleteService(service.service_id)}>Xóa</button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {services.map(service => (
-                            <tr key={service.service_id}>
-                                <td>{service.service_id}</td>
-                                <td>{service.name}</td>
-                                <td>{service.price} VNĐ</td>
-                                <td>{service.description}</td>
-                                <td>
-                                    <button onClick={() => setEditService(service)}>Sửa</button>
-                                    <button onClick={() => handleDeleteService(service.service_id)}>Xóa</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
