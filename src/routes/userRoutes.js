@@ -8,7 +8,7 @@ import Infor from '../pages/user/infor/index';
 import Search from '../pages/user/search/index';
 import User from '../pages/user/user.infor/index';
 import Register from '../pages/user/register/index';
-import Party from '../pages/user/service/party/index';
+import Restaurant from '../pages/user/service/party/index';
 import Layout from '../pages/user/service/laudry/index';
 import Transport from '../pages/user/service/transport/index';
 import Shop from '../pages/user/service/shop/index';
@@ -26,7 +26,7 @@ const config = [
     { path: '/search', component: Search },
     { path: '/user', component: User /*, hideLayout: true */}, // Ẩn Header, Sidebar, Footer
     { path: '/register', component: Register, hideLayout: true }, // Ẩn Header, Sidebar, Footer
-    { path: '/party', component: Party },
+    { path: '/restaurant', component: Restaurant },
     { path: '/laundry', component: Layout },
     { path: '/transport', component: Transport },
     { path: '/shop', component: Shop },

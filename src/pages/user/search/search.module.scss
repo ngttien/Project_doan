@@ -119,7 +119,7 @@
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-button {
+.next_day, .in_day {
   color: black;
   // font-weight: bold;
   padding: 10px 20px;
@@ -162,9 +162,10 @@ button {
   justify-content: flex-start;
   width: 100%;
 
-  button {
+ .search_button {
+  color: #000;
     margin: auto 10px;
-    background-color: white;
+    background-color: #000;
     border: none;
     padding: 10px 20px;
     border-radius: 20px;

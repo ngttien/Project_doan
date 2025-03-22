@@ -6,11 +6,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 500;
+    z-index: 1100;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 0.2px solid rgb(0, 0, 0, 0.3);
+    border: 0.2px solid rgba(0, 0, 0, 0.3);
 }
 
 .menu {
@@ -21,13 +21,13 @@
     align-items: center;
 }
 
-.menu-left {
+.menu_left {
     display: flex;
     padding: 0px;
     font-size: 40px;
     width: 50px;
 
-    .menu-logo {
+    .menu_logo {
         margin: auto 0;
         display: flex;
         justify-content: center;
@@ -38,7 +38,7 @@
         height: 40px;
     }
     
-    .menu-title {
+    .menu_title {
         margin-left: 10px !important;
         margin: auto 0;
     }
@@ -50,8 +50,7 @@
     
 }
 
-
-.menu-center {
+.menu_center {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,33 +63,30 @@
     }
 }
 
-
-
-.menu-right {
+.menu_right {
     display: flex;
     justify-content: center;
-    align-items: center;
     align-items: center;
     text-align: center;
 
     /* Form tìm kiếm */
-    .search-form {
+    .search_form {
         margin: 0 auto;
         background: #fff;
-        border-radius: 30px;
+        border-radius: 30px; /* Giữ bo tròn */
         display: flex;
         align-items: center;
         transition: all 0.5s ease-in-out;
+        overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
     }
 
-    .input-holder {
+    .input_holder {
         display: flex;
         align-items: center;
         justify-content: center;
-        
     }
 
-    .search-input {
+    .search_input {
         border: none;
         outline: none;
         background: none;
@@ -98,17 +94,15 @@
         padding: 0;
         transition: width 0.25s ease-in-out;
         font-size: medium;
-
     }
 
-    .search-form:focus-within .search-input {
+    .search_form:focus-within .search_input {
         width: 15rem !important;
         height: 3rem !important;
         padding: 0.5rem 1rem;
-        
     }
 
-    .search-icon {
+    .search_icon {
         background-color: transparent;
         cursor: pointer;
         border: none;
@@ -121,7 +115,7 @@
         color: #000;
     }
 
-    .log-container button {
+    .log_container button {
         font-weight: bolder;
         font-size: medium;
         margin: auto 20px;
@@ -133,11 +127,10 @@
         height: 40px;
         margin: auto 0 auto 30px;
         color: black;
-        
     }
-    .log-container button:hover {
+
+    .log_container button:hover {
         background: rgb(184, 184, 192);    
         // border: 1px solid #fff;
     }
 }
-

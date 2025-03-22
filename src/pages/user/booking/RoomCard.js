@@ -27,8 +27,8 @@ const RoomCard = ({ room }) => {
                             ))}
                         </ul>
                         <div className={cx("room-actions")}>
-                            <button className={cx("highlight")}>Đặt phòng</button>
-                            <button>Xem chi tiết</button>
+                            <button className={cx("booking")}>Đặt phòng</button>
+                            <button className={cx("detail")}>Xem chi tiết</button>
                         </div>
                     </div>
                 </div>

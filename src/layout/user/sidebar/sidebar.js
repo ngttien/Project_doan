@@ -69,7 +69,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
                                 <Link to="/transport">Đặt xe</Link>
                                 <Link to="/laudry">Giặt đồ</Link>
                                 <Link to="/shop">Cửa hàng</Link>
-                                <Link to="/party">Đặt tiệc</Link>
+                                <Link to="/restaurant">Đặt tiệc</Link>
                             </div>
                         )}
                     </div>

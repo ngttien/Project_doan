@@ -1,5 +1,7 @@
 .staff_container {
     padding: 20px;
+    position: relative; /* Đảm bảo container chính có z-index thấp hơn modal */
+    z-index: 1;
 }
 
 .search_add {
@@ -21,10 +23,6 @@
         cursor: pointer;
     }
 
-    .search_button {
-        background-color: #ddd;
-    }
-
     .add_button {
         background-color: #4CAF50;
         color: white;
@@ -44,14 +42,39 @@
     th {
         background-color: #f4f4f4;
     }
+}
 
-    .active {
-        color: green;
-        font-weight: bold;
-    }
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền mờ */
+    display: flex;
+    justify-content: center; /* Căn giữa ngang */
+    align-items: center; /* Căn giữa dọc */
+    z-index: 1000; /* Nổi lên trên tất cả */
+}
 
-    .inactive {
-        color: red;
-        font-weight: bold;
-    }
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Hiệu ứng bóng */
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    z-index: 1001; /* Nổi trên overlay */
+}
+
+.close_button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #f44336; /* Màu đỏ cho nút đóng */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }

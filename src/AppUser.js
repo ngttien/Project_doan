@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DefaultLayout from "../src/layout/user/defaultlayout";
 import userRoutes from "../src/routes/userRoutes";
+import ScrollToTop from "./ScrollToTop";
 
 function AppUser() {
     useEffect(() => {
@@ -14,6 +15,8 @@ function AppUser() {
 
     return (
         <Router>
+            <ScrollToTop />
+
             <div className="app-container">
                 <Routes>
                     {userRoutes.map(({ path, component: Page, hideLayout }, idx) => {

@@ -3,7 +3,6 @@ import Styles from './staff.module.scss';
 import classNames from 'classnames/bind';
 import { FaSearch } from "react-icons/fa";
 
-
 const cx = classNames.bind(Styles);
 
 const staffList = [
@@ -12,9 +11,14 @@ const staffList = [
     { id: 3, name: 'Lê Văn C', position: 'Nhân viên', email: 'c@gmail.com', phone: '0345678901', status: 'Không làm' }
 ];
 
-const ManageStaff = () => {
+function ManageStaff() {
     const [searchTerm, setSearchTerm] = useState('');
     const [staffData, setStaffData] = useState(staffList);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
 
     const handleStatusChange = (id, newStatus) => {
         setStaffData(prevStaff =>
@@ -37,7 +41,11 @@ const ManageStaff = () => {
                     value={searchTerm} 
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button>Thêm</button>
+                <div className="Add_staff">
+                    <button onClick={toggleModal} className={cx("add_button")}>
+                        Thêm Nhân Viên
+                    </button>
+                </div>
             </div>
             
             <table className={cx("staff_table")}>                
@@ -70,8 +78,20 @@ const ManageStaff = () => {
                     ))}
                 </tbody>
             </table>
+
+            {isModalOpen && (
+                <div className={cx("modal-overlay")}>
+                    <div className={cx("modal-content")}>
+                        <h2>Thêm Nhân Viên Mới</h2>
+                        <p>Điền thông tin nhân viên tại đây (form có thể thêm sau).</p>
+                        <button onClick={toggleModal} className={cx("close_button")}>
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
-};
+}
 
 export default ManageStaff;
