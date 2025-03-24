@@ -12,20 +12,31 @@ function Sidebar({ isOpen, toggleSidebar }) {
     const sidebarRef = useRef(null);
     const [isServiceOpen, setIsServiceOpen] = useState(false);
     const [user, setUser] = useState(null);
+    const [userRole, setUserRole] = useState(null); 
     const navigate = useNavigate();
 
-    // Kiểm tra trạng thái đăng nhập khi component mount
+    // Kiểm tra trạng thái đăng nhập và vai trò
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
-                setUser(currentUser); // Lưu thông tin người dùng nếu đã đăng nhập
+                setUser(currentUser);
+                // Lấy vai trò từ custom claims
+                const tokenResult = await currentUser.getIdTokenResult();
+                const role = tokenResult.claims.role || 'user';
+                setUserRole(role);
+
+                // Nếu là admin, điều hướng về trang admin
+                if (role === 'admin') {
+                    navigate('/admin');
+                }
             } else {
-                setUser(null); // Đặt user là null nếu chưa đăng nhập
+                setUser(null);
+                setUserRole(null);
             }
         });
 
-        return () => unsubscribe(); // Cleanup subscription khi component unmount
-    }, []);
+        return () => unsubscribe();
+    }, [navigate]);
 
     // Đóng sidebar khi click ra ngoài
     useEffect(() => {
@@ -44,22 +55,18 @@ function Sidebar({ isOpen, toggleSidebar }) {
         };
     }, [isOpen, toggleSidebar]);
 
-    // Hàm điều hướng đến trang đăng nhập
     const handleLoginRedirect = () => {
         navigate('/login');
-        toggleSidebar(); // Đóng sidebar sau khi điều hướng
+        toggleSidebar();
     };
 
     return (
         <>
-            {/* Overlay nền khi sidebar mở */}
             {isOpen && <div className={cx("backdrop")} onClick={toggleSidebar}></div>}
 
-            {/* Sidebar */}
             <nav ref={sidebarRef} className={cx("sidebar", { active: isOpen })}>
                 <div className={cx("close-btn")} onClick={toggleSidebar}>×</div>
 
-                {/* Sidebar nội dung */}
                 <div className={cx("sidebar-top")}>
                     <div className={cx("profile")}>
                         <div className={cx("row")}>
@@ -86,15 +93,14 @@ function Sidebar({ isOpen, toggleSidebar }) {
                     </div>
                 </div>
 
-                {/* Hiển thị menu chỉ khi đã đăng nhập */}
-                {user && (
+                {/* Hiển thị menu chỉ khi đã đăng nhập và là user */}
+                {user && userRole === 'user' && (
                     <>
                         <div className={cx("sidebar-middle")}>
                             <Link to="/infor" className={cx("intro")}><p>Giới thiệu</p></Link>
                             <Link to="/sale" className={cx("sale")}><p>Khuyến mãi</p></Link>
                             <Link to="/booking" className={cx("booking")}><p>Đặt phòng</p></Link>
 
-                            {/* Dropdown dịch vụ */}
                             <div
                                 className={cx("service-wrapper")}
                                 onMouseEnter={() => setIsServiceOpen(true)}
@@ -115,7 +121,6 @@ function Sidebar({ isOpen, toggleSidebar }) {
                             </div>
                         </div>
 
-                        {/* Sidebar bottom */}
                         <div className={cx("sidebar-bottom")}>
                             <Link to="#">Trợ giúp</Link>
                             <Link to="#">Gửi ý kiến phản hồi</Link>

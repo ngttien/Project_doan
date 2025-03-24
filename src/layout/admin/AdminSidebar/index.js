@@ -12,21 +12,32 @@ function AdminSidebar() {
     const location = useLocation();
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userRole, setUserRole] = useState(null); 
 
-    // Kiểm tra trạng thái đăng nhập khi component mount
+    // Kiểm tra trạng thái đăng nhập và vai trò
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                setIsAuthenticated(true); // Người dùng đã đăng nhập
+                setIsAuthenticated(true);
+                // Lấy vai trò từ custom claims
+                const tokenResult = await user.getIdTokenResult();
+                const role = tokenResult.claims.role || 'user';
+                setUserRole(role);
+
+                // Nếu không phải admin, điều hướng về trang chính
+                if (role !== 'admin') {
+                    navigate('/');
+                }
             } else {
-                setIsAuthenticated(false); // Người dùng chưa đăng nhập
+                setIsAuthenticated(false);
+                setUserRole(null);
+                navigate('/admin/login');
             }
         });
 
-        return () => unsubscribe(); // Cleanup subscription khi component unmount
-    }, []);
+        return () => unsubscribe();
+    }, [navigate]);
 
-    // Hàm xử lý đăng xuất
     const handleLogout = async () => {
         try {
             await signOut(auth);
@@ -36,10 +47,14 @@ function AdminSidebar() {
         }
     };
 
-    // Hàm xử lý đăng nhập (điều hướng đến trang đăng nhập)
     const handleLogin = () => {
         navigate('/admin/login');
     };
+
+    // Nếu chưa đăng nhập hoặc không phải admin, không hiển thị sidebar
+    if (!isAuthenticated || userRole !== 'admin') {
+        return null;
+    }
 
     return (
         <div className={cx("sidebar_container")}>
@@ -72,7 +87,6 @@ function AdminSidebar() {
                     <p>Quản Lí Đánh Giá và Phản Hồi</p>
                 </Link>
 
-                {/* Hiển thị nút "Đăng nhập" hoặc "Đăng xuất" dựa trên trạng thái đăng nhập */}
                 <button
                     className={cx("logout_btn")}
                     onClick={isAuthenticated ? handleLogout : handleLogin}

@@ -1,10 +1,8 @@
-// server/app.js
 const express = require('express');
 const app = express();
 const path = require('path');
 const apiRoutes = require('./routes/apiRoutes');
 const admin = require('firebase-admin');
-// const serviceAccount = require('./config/serviceAccountKey.json');
 const cors = require('cors');
 const roomRoutes = require('./routes/roomRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
@@ -38,6 +36,23 @@ const authenticateToken = async (req, res, next) => {
         res.status(403).send('Invalid token: ' + error.message);
     }
 };
+
+app.post('/api/set-role', async (req, res) => {
+    const { uid, role } = req.body;
+
+    if (!uid || !role || !['admin', 'user'].includes(role)) {
+        return res.status(400).json({ error: 'Invalid UID or role' });
+    }
+
+    try {
+        // Gán custom claim cho người dùng
+        await admin.auth().setCustomUserClaims(uid, { role });
+        res.status(200).json({ message: `Successfully set role ${role} for user ${uid}` });
+    } catch (error) {
+        console.error('Error setting custom claims:', error);
+        res.status(500).json({ error: 'Failed to set role' });
+    }
+});
 
 app.use('/api', authenticateToken, apiRoutes);
 app.use('/api', roomRoutes);

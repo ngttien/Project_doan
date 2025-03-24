@@ -23,7 +23,6 @@ function Register() {
         setError('');
         setSuccess('');
 
-        // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp không
         if (password !== confirmPassword) {
             setError('Mật khẩu và xác nhận mật khẩu không khớp!');
             return;
@@ -40,7 +39,7 @@ function Register() {
             // Lưu thông tin khách hàng vào Firestore
             const customerData = { name: username, email };
             const token = await user.getIdToken();
-            const response = await fetch('http://localhost:5000/api/customers', {
+            let response = await fetch('http://localhost:5000/api/customers', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,14 +53,28 @@ function Register() {
                 throw new Error(`Lưu thông tin khách hàng thất bại: ${errorText || response.statusText}`);
             }
 
+            // Gán vai trò "user" cho người dùng
+            response = await fetch('http://localhost:5000/api/set-role', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ uid: user.uid, role: 'user' }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Gán vai trò thất bại: ${errorText || response.statusText}`);
+            }
+
             console.log('Customer registered:', await response.json());
             setSuccess('Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...');
             setTimeout(() => {
-                navigate('/login'); // Điều hướng đến trang đăng nhập sau 2 giây
+                navigate('/login');
             }, 2000);
         } catch (error) {
             console.error('Registration error:', error);
-            // Xử lý các lỗi cụ thể từ Firebase
             switch (error.code) {
                 case 'auth/email-already-in-use':
                     setError('Email đã được sử dụng. Vui lòng chọn email khác!');
@@ -81,21 +94,15 @@ function Register() {
     return (
         <div className={cx("background_register")}>
             <div className={cx('register_container')}>
-                {/* Nút quay về Home */}
                 <Link to="/" className={cx('back_home')}>
                     <FaArrowLeft className={cx('back_icon')} /> Home
                 </Link>
 
                 <form className={cx("register_form")} onSubmit={handleSubmit}>
                     <div className={cx("register_title")}><h1>Register</h1></div>
-
-                    {/* Hiển thị thông báo thành công nếu có */}
                     {success && <p className={cx("success")}>{success}</p>}
-
-                    {/* Hiển thị thông báo lỗi nếu có */}
                     {error && <p className={cx("error")}>{error}</p>}
 
-                    {/* Username */}
                     <input
                         className={cx('input_username')}
                         type="text"
@@ -107,7 +114,6 @@ function Register() {
                     />
                     <FaUser className={cx('icon')} />
 
-                    {/* Email */}
                     <input
                         className={cx('input_email')}
                         type="email"
@@ -119,7 +125,6 @@ function Register() {
                     />
                     <FaEnvelope className={cx('icon')} />
 
-                    {/* Password */}
                     <input
                         className={cx('input_password')}
                         type="password"
@@ -131,7 +136,6 @@ function Register() {
                     />
                     <FaLock className={cx('icon')} />
 
-                    {/* Confirm Password */}
                     <input
                         className={cx('input_repassword')}
                         type="password"
@@ -143,14 +147,12 @@ function Register() {
                     />
                     <FaLock className={cx('icon')} />
 
-                    {/* Button Register */}
                     <div className={cx('register_btn')}>
                         <button type="submit" className={cx('register_button')}>
                             Register
                         </button>
                     </div>
 
-                    {/* Login */}
                     <div className={cx('login_link')}>
                         <p>
                             Already have an account? →

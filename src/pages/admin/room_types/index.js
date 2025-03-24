@@ -117,7 +117,7 @@ const AdminRoomTypes = () => {
             <div className={cx("search_add")}>
                 <input
                     type="text"
-                    placeholder="Tìm kiếm loại phòng theo tên..."
+                    placeholder="Tìm kiếm loại phòng..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />

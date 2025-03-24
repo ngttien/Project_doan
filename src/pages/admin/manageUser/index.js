@@ -133,7 +133,7 @@ const AdminCustomers = () => {
       <div className={cx("search_add")}>
         <input
           type="text"
-          placeholder="Tìm kiếm khách hàng theo email hoặc tên..."
+          placeholder="Tìm kiếm khách hàng..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
