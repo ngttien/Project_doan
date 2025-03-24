@@ -1,37 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './roomType.module.scss';
-import classNames from 'classnames/bind';
-import { FaSearch } from "react-icons/fa";
+import { useNavigate, useLocation } from 'react-router-dom';
+// import '~/style/admin/admin.scss';
+import { signOut } from 'firebase/auth';
 import { auth } from '~/firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-
-const cx = classNames.bind(styles);
 
 const AdminRoomTypes = () => {
     const [roomTypes, setRoomTypes] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState('');
     const [newRoomType, setNewRoomType] = useState({
         type_name: '',
         default_price: '',
         description: '',
     });
     const [message, setMessage] = useState('');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            if (currentUser) {
-                fetchRoomTypes();
-            } else {
-                setLoading(false);
-                navigate('/admin/login');
-            }
-        });
-
-        return () => unsubscribe();
-    }, [navigate]);
+        fetchRoomTypes();
+    }, []);
 
     const fetchRoomTypes = async () => {
         try {
@@ -101,87 +89,75 @@ const AdminRoomTypes = () => {
         }
     };
 
-    // Lọc danh sách loại phòng theo searchTerm
-    const filteredRoomTypes = roomTypes.filter(roomType =>
-        roomType.type_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const handleNavigate = (path) => {
+        navigate(path);
+        setIsSidebarOpen(false);
+    };
 
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className={cx("room_type_container")}>
-            <h1>Quản Lý Loại Phòng</h1>
-            {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
-
-            {/* Ô tìm kiếm */}
-            <div className={cx("search_add")}>
-                <input
-                    type="text"
-                    placeholder="Tìm kiếm loại phòng theo tên..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
-
-            {/* Form thêm loại phòng */}
-            <div className={cx("add_form")}>
-                <h2>Thêm Loại Phòng</h2>
-                <form onSubmit={handleAddRoomType}>
-                    <div className={cx("form_group")}>
-                        <label>Tên loại phòng</label>
-                        <input
-                            type="text"
-                            placeholder="Tên loại phòng"
-                            value={newRoomType.type_name}
-                            onChange={(e) => setNewRoomType({ ...newRoomType, type_name: e.target.value })}
-                            required
-                        />
-                    </div>
-                    <div className={cx("form_group")}>
-                        <label>Giá mặc định</label>
-                        <input
-                            type="number"
-                            placeholder="Giá mặc định"
-                            value={newRoomType.default_price}
-                            onChange={(e) => setNewRoomType({ ...newRoomType, default_price: e.target.value })}
-                            required
-                        />
-                    </div>
-                    <div className={cx("form_group")}>
-                        <label>Mô tả</label>
-                        <input
-                            type="text"
-                            placeholder="Mô tả"
-                            value={newRoomType.description}
-                            onChange={(e) => setNewRoomType({ ...newRoomType, description: e.target.value })}
-                        />
-                    </div>
-                    <button type="submit">Thêm</button>
-                </form>
-            </div>
-
-            {/* Danh sách loại phòng */}
-            <h2>Danh Sách Loại Phòng</h2>
-            <table className={cx("room_type_table")}>
-                <thead>
-                    <tr>
-                        <th>Mã Loại</th>
-                        <th>Tên Loại</th>
-                        <th>Giá Mặc Định</th>
-                        <th>Mô Tả</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredRoomTypes.map(roomType => (
-                        <tr key={roomType.type_id}>
-                            <td>{roomType.type_id}</td>
-                            <td>{roomType.type_name}</td>
-                            <td>{roomType.default_price}</td>
-                            <td>{roomType.description || 'N/A'}</td>
+        <div className="admin-container">
+            <div className="main-content">
+                <h1>Admin - Quản Lý Loại Phòng</h1>
+                {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
+                <div className="add-form">
+                    <h2>Thêm Loại Phòng</h2>
+                    <form onSubmit={handleAddRoomType}>
+                        <div className="form-group">
+                            <label>Tên loại phòng</label>
+                            <input
+                                type="text"
+                                placeholder="Tên loại phòng"
+                                value={newRoomType.type_name}
+                                onChange={(e) => setNewRoomType({ ...newRoomType, type_name: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Giá mặc định</label>
+                            <input
+                                type="number"
+                                placeholder="Giá mặc định"
+                                value={newRoomType.default_price}
+                                onChange={(e) => setNewRoomType({ ...newRoomType, default_price: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Mô tả</label>
+                            <input
+                                type="text"
+                                placeholder="Mô tả"
+                                value={newRoomType.description}
+                                onChange={(e) => setNewRoomType({ ...newRoomType, description: e.target.value })}
+                            />
+                        </div>
+                        <button type="submit">Thêm</button>
+                    </form>
+                </div>
+                <h2>Danh Sách Loại Phòng</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã Loại</th>
+                            <th>Tên Loại</th>
+                            <th>Giá Mặc Định</th>
+                            <th>Mô Tả</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {roomTypes.map(roomType => (
+                            <tr key={roomType.type_id}>
+                                <td>{roomType.type_id}</td>
+                                <td>{roomType.type_name}</td>
+                                <td>{roomType.default_price}</td>
+                                <td>{roomType.description}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

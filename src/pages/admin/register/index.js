@@ -1,32 +1,36 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { auth } from '~/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import '~/style/admin/adminLogin.scss';
+import Styles from './registerAdmin.module.scss';
+import classNames from 'classnames/bind';
 
 const AdminRegister = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const cx = classNames.bind(Styles);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
+        if (formData.password !== formData.confirmPassword) {
             setError('Mật khẩu không khớp!');
             setMessage('');
             return;
         }
         try {
+            setLoading(true);
             setError('');
             setMessage('');
-            console.log('Registering with email:', email);
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
             const user = userCredential.user;
             const token = await user.getIdToken();
-            console.log('Token after register:', token);
 
             const response = await fetch('http://localhost:5000/api/set-admin-role', {
                 method: 'POST',
@@ -34,61 +38,72 @@ const AdminRegister = () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email: formData.email }),
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Failed to set admin role: ${errorText || response.statusText}`);
+                throw new Error('Không thể đặt quyền admin!');
             }
 
             setMessage('Đăng ký thành công! Chuyển hướng đến trang đăng nhập...');
             setTimeout(() => navigate('/admin/login'), 2000);
         } catch (err) {
-            console.error('Register error:', err);
             setError('Đăng ký thất bại: ' + err.message);
             setMessage('');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="admin-register-container">
-            <h2>Đăng ký Admin</h2>
-            {error && <p className="error">{error}</p>}
-            {message && <p className="success">{message}</p>}
-            <form onSubmit={handleRegister}>
-                <div className="form-group">
-                    <label>Email:</label>
+        <div className={cx("background_register")}> 
+            <div className={cx('register_container')}>
+                <form className={cx('register_form')} onSubmit={handleRegister}>
+                    <div className={cx('register_title')}>
+                        <h1>Đăng ký Admin</h1>
+                        {error && <p className={cx('error_message')}>{error}</p>}
+                        {message && <p className={cx('success_message')}>{message}</p>}
+                    </div>
                     <input
+                        className={cx("input_field")}
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        placeholder="Nhập email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        autoComplete="email"
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label>Mật khẩu:</label>
                     <input
+                        className={cx("input_field")}
                         type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        placeholder="Nhập mật khẩu"
+                        value={formData.password}
+                        onChange={handleChange}
+                        autoComplete="new-password"
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label>Xác nhận mật khẩu:</label>
                     <input
+                        className={cx("input_field")}
                         type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        name="confirmPassword"
+                        placeholder="Xác nhận mật khẩu"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        autoComplete="new-password"
                         required
                     />
-                </div>
-                <button type="submit">Đăng ký</button>
-                <p>
-                    Đã có tài khoản? <a href="/admin/login">Đăng nhập</a>
-                </p>
-            </form>
+                    <div className={cx("register_btn")}>
+                    <button className={cx("register_button")} type="submit" disabled={loading}>
+                        {loading ? 'Đang đăng ký...' : 'Đăng ký'}
+                    </button>
+                    </div>
+                    <p className={cx("login_link")}>
+                        Đã có tài khoản? <Link className={cx("button_login")} to="/admin/login">Đăng nhập ngay</Link>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 };

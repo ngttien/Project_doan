@@ -44,6 +44,21 @@
         }
 
     }
+    .service_btn {
+        margin-left: auto; /* Đẩy nút về phía bên phải */
+        display: flex;
+        gap: 10px;
+         
+    }
+    .logout-btn {
+        background-color: white;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 15px;
+        text-decoration: none;
+    }
+    
     .btn {
         background-color: white;
         color: black;
@@ -51,7 +66,6 @@
         border-radius: 5px;
         font-size: 15px;
         text-decoration: none;
-        margin-left: auto; /* Đẩy nút về phía bên phải */
     }
 }
 

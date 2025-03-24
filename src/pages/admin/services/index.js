@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './services.module.scss';
-import classNames from 'classnames/bind';
-import { FaSearch } from "react-icons/fa";
+import { useNavigate, useLocation } from 'react-router-dom';
+// import '~/style/admin/admin.scss';
+import { signOut } from 'firebase/auth';
 import { auth } from '~/firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-
-const cx = classNames.bind(styles);
 
 const AdminServices = () => {
     const [services, setServices] = useState([]);
@@ -16,26 +12,15 @@ const AdminServices = () => {
         price: '',
         description: '',
     });
-    const [user, setUser] = useState(null);
     const [editService, setEditService] = useState(null);
     const [message, setMessage] = useState('');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            if (currentUser) {
-                setUser(currentUser);
-                const tokenResult = await currentUser.getIdTokenResult();
-                console.log('User role:', tokenResult.claims.role);
-                fetchServices();
-            } else {
-                setLoading(false);
-                navigate('/admin/login');
-            }
-        });
-
-        return () => unsubscribe();
-    }, [navigate]);
+        fetchServices();
+    }, []);
 
     const fetchServices = async () => {
         try {
@@ -159,74 +144,81 @@ const AdminServices = () => {
         }
     };
 
+    const handleNavigate = (path) => {
+        navigate(path);
+        setIsSidebarOpen(false);
+    };
+
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className={cx("staff_container")}>
-            <h1>Admin - Quản Lý Dịch Vụ</h1>
-            {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
-            <div className={cx("add-form")}>
-                <h2>{editService ? 'Cập nhật Dịch Vụ' : 'Thêm Dịch Vụ'}</h2>
-                <form onSubmit={editService ? handleUpdateService : handleAddService}>
-                    <div className="form-group">
-                        <label>Tên dịch vụ</label>
-                        <input
-                            type="text"
-                            placeholder="Tên dịch vụ"
-                            value={editService ? editService.name : newService.name}
-                            onChange={(e) => editService ? setEditService({ ...editService, name: e.target.value }) : setNewService({ ...newService, name: e.target.value })}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Giá</label>
-                        <input
-                            type="number"
-                            placeholder="Giá"
-                            value={editService ? editService.price : newService.price}
-                            onChange={(e) => editService ? setEditService({ ...editService, price: e.target.value }) : setNewService({ ...newService, price: e.target.value })}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Mô tả</label>
-                        <input
-                            type="text"
-                            placeholder="Mô tả"
-                            value={editService ? editService.description : newService.description}
-                            onChange={(e) => editService ? setEditService({ ...editService, description: e.target.value }) : setNewService({ ...newService, description: e.target.value })}
-                        />
-                    </div>
-                    <button type="submit">{editService ? 'Cập nhật' : 'Thêm'}</button>
-                    {editService && <button type="button" onClick={() => setEditService(null)}>Hủy</button>}
-                </form>
-            </div>
-            <h2>Danh Sách Dịch Vụ</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mã Dịch Vụ</th>
-                        <th>Tên Dịch Vụ</th>
-                        <th>Giá</th>
-                        <th>Mô Tả</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {services.map(service => (
-                        <tr key={service.service_id}>
-                            <td>{service.service_id}</td>
-                            <td>{service.name}</td>
-                            <td>{service.price} VNĐ</td>
-                            <td>{service.description}</td>
-                            <td>
-                                <button onClick={() => setEditService(service)}>Sửa</button>
-                                <button onClick={() => handleDeleteService(service.service_id)}>Xóa</button>
-                            </td>
+        <div className="admin-container">
+            <div className="main-content">
+                <h1>Admin - Quản Lý Dịch Vụ</h1>
+                {message && <p className={message.includes('thành công') ? 'success' : 'error'}>{message}</p>}
+                <div className="add-form">
+                    <h2>{editService ? 'Cập nhật Dịch Vụ' : 'Thêm Dịch Vụ'}</h2>
+                    <form onSubmit={editService ? handleUpdateService : handleAddService}>
+                        <div className="form-group">
+                            <label>Tên dịch vụ</label>
+                            <input
+                                type="text"
+                                placeholder="Tên dịch vụ"
+                                value={editService ? editService.name : newService.name}
+                                onChange={(e) => editService ? setEditService({ ...editService, name: e.target.value }) : setNewService({ ...newService, name: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Giá</label>
+                            <input
+                                type="number"
+                                placeholder="Giá"
+                                value={editService ? editService.price : newService.price}
+                                onChange={(e) => editService ? setEditService({ ...editService, price: e.target.value }) : setNewService({ ...newService, price: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Mô tả</label>
+                            <input
+                                type="text"
+                                placeholder="Mô tả"
+                                value={editService ? editService.description : newService.description}
+                                onChange={(e) => editService ? setEditService({ ...editService, description: e.target.value }) : setNewService({ ...newService, description: e.target.value })}
+                            />
+                        </div>
+                        <button type="submit">{editService ? 'Cập nhật' : 'Thêm'}</button>
+                        {editService && <button type="button" onClick={() => setEditService(null)}>Hủy</button>}
+                    </form>
+                </div>
+                <h2>Danh Sách Dịch Vụ</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã Dịch Vụ</th>
+                            <th>Tên Dịch Vụ</th>
+                            <th>Giá</th>
+                            <th>Mô Tả</th>
+                            <th>Hành động</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {services.map(service => (
+                            <tr key={service.service_id}>
+                                <td>{service.service_id}</td>
+                                <td>{service.name}</td>
+                                <td>{service.price} VNĐ</td>
+                                <td>{service.description}</td>
+                                <td>
+                                    <button onClick={() => setEditService(service)}>Sửa</button>
+                                    <button onClick={() => handleDeleteService(service.service_id)}>Xóa</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

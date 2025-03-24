@@ -120,6 +120,16 @@
         justify-content: center;
         color: #000;
     }
+    
+    .greeting {
+        text-decoration: none;
+        color: black;
+        
+    }
+    .greeting:hover {
+        color: black;
+        text-decoration: underline;
+    }
 
     .log-container button {
         font-weight: bolder;

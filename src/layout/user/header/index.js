@@ -104,10 +104,7 @@ function Header() {
                   <div className={cx("log-container")}>
                     {user ? (
                       <div className={cx("user-info")}>
-                        <span>Xin chào, {user.displayName || user.email}</span>
-                        <button onClick={handleLogout} className={cx("logout-btn")}>
-                          Đăng xuất
-                        </button>
+                        <Link to="/user" className={cx("greeting")}>Xin chào, {user.displayName || user.email}</Link>
                       </div>
                     ) : (
                       <Link to="/login">

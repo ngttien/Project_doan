@@ -1,0 +1,190 @@
+
+.container {
+    margin: 30px;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}   
+
+.search_add {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    input {
+        padding: 8px;
+        width: 250px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .add_button {
+        background-color: #4CAF50;
+        color: white;
+    }
+}
+
+.employee_table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+}
+
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền mờ */
+    display: flex;
+    justify-content: center; /* Căn giữa ngang */
+    align-items: center; /* Căn giữa dọc */
+    z-index: 1000; /* Nổi lên trên tất cả */
+}
+
+// .modal-content {
+//     background-color: white;
+//     padding: 20px;
+//     border-radius: 10px;
+//     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Hiệu ứng bóng */
+//     text-align: center;
+//     max-width: 400px;
+//     width: 100%;
+//     z-index: 1001; /* Nổi trên overlay */
+// }
+
+.close_button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #f44336; /* Màu đỏ cho nút đóng */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); // Màu nền mờ
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; // Đảm bảo modal nằm trên các phần tử khác
+}
+
+.modal_content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px; // Giới hạn chiều rộng tối đa
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out; // Hiệu ứng xuất hiện
+
+    h2 {
+        margin: 0 0 20px;
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; // Khoảng cách giữa các field
+
+        input, select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+
+            &:focus {
+                outline: none;
+                border-color: #007bff; // Màu viền khi focus
+            }
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+        }
+
+        select {
+            width: 100%;
+            cursor: pointer;
+            background: #fff;
+        }
+    }
+}
+
+.form_buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:first-child { // Nút Lưu
+            background: #007bff;
+            color: white;
+            
+            &:hover {
+                background: #0056b3;
+            }
+        }
+
+        &:last-child { // Nút Hủy
+            background: #f1f1f1;
+            color: #333;
+            
+            &:hover {
+                background: #ddd;
+            }
+        }
+    }
+}
+
+// Hiệu ứng animation khi modal xuất hiện
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
